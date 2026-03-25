@@ -1,0 +1,2497 @@
+[
+    {
+        "name": "Poke/Digda",
+        "times_played": 14,
+        "words": [
+            {
+                "german": "graben",
+                "english": "dig",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 9,
+                "mode": 1
+            },
+            {
+                "german": "Graben",
+                "english": "Trench",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 8,
+                "plural": "Gr\u00e4ben",
+                "gender": "Male"
+            },
+            {
+                "german": "irdisch",
+                "english": "earthly",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 9
+            },
+            {
+                "german": "unterirdisch",
+                "english": "underground",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 11
+            },
+            {
+                "german": "bewegen",
+                "english": "move",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 7,
+                "mode": 1
+            },
+            {
+                "german": "bewegen",
+                "english": "change",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 7,
+                "mode": 4
+            },
+            {
+                "german": "verabscheuen",
+                "english": "loathe",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 8,
+                "mode": {
+                    "Present": 1,
+                    "Preterite": 2,
+                    "Past Perfect": 3,
+                    "Reflexive": 4
+                }
+            },
+            {
+                "german": "tauchen",
+                "english": "dive",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 9,
+                "mode": {
+                    "Present": 1,
+                    "Preterite": 2,
+                    "Past Perfect": 3,
+                    "Reflexive": 4
+                }
+            },
+            {
+                "german": "auf*tauchen",
+                "english": "surface",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 8,
+                "mode": {
+                    "Present": 1,
+                    "Preterite": 2,
+                    "Past Perfect": 3,
+                    "Reflexive": 4
+                }
+            },
+            {
+                "german": "Oberfl\u00e4che",
+                "english": "Surface",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 8,
+                "plural": "Oberfl\u00e4chen",
+                "gender": "Female"
+            }
+        ]
+    },
+    {
+        "name": "Poke/Froxy",
+        "times_played": 7,
+        "words": [
+            {
+                "german": "stossen",
+                "english": "push",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": {
+                    "Present": 1,
+                    "Preterite": 2,
+                    "Past Perfect": 3,
+                    "Reflexive": 4
+                }
+            },
+            {
+                "german": "Brust",
+                "english": "Chest",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "Br\u00fcste",
+                "gender": "Female"
+            },
+            {
+                "german": "r\u00fccken",
+                "english": "move",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": {
+                    "Present": 1,
+                    "Preterite": 2,
+                    "Past Perfect": 3,
+                    "Reflexive": 4
+                }
+            },
+            {
+                "german": "blasen",
+                "english": "blow",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": {
+                    "Present": 1,
+                    "Preterite": 2,
+                    "Past Perfect": 3,
+                    "Reflexive": 4
+                }
+            },
+            {
+                "german": "gegnerisch",
+                "english": "opposing",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 6
+            },
+            {
+                "german": "ab*fangen",
+                "english": "block",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": 1
+            },
+            {
+                "german": "erleiden",
+                "english": "suffer",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": 1
+            },
+            {
+                "german": "Schaden",
+                "english": "Damage",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "Sch\u00e4den",
+                "gender": "Male"
+            },
+            {
+                "german": "verlingern",
+                "english": "reduce",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 6,
+                "mode": 1
+            }
+        ]
+    },
+    {
+        "name": "Nouns 1",
+        "times_played": 15,
+        "words": [
+            {
+                "german": "Schaufel",
+                "english": "Shovel",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Schaufeln",
+                "gender": "Female"
+            },
+            {
+                "german": "Pinsel",
+                "english": "Brush",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Pinsel",
+                "gender": "Male"
+            },
+            {
+                "german": "Axt",
+                "english": "Axe",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "\u00c4xte",
+                "gender": "Female"
+            },
+            {
+                "german": "Thermometer",
+                "english": "Thermometer",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Thermometer",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Ernte",
+                "english": "Harvest",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Ernten",
+                "gender": "Female"
+            },
+            {
+                "german": "Samen",
+                "english": "Seed",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Samen",
+                "gender": "Male"
+            },
+            {
+                "german": "Hammer",
+                "english": "Hammer",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "H\u00e4mmer",
+                "gender": "Male"
+            },
+            {
+                "german": "Forschung",
+                "english": "Research",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 13,
+                "plural": "Forschungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Quittung",
+                "english": "Receipt",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Quittungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Stall",
+                "english": "Barn",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "St\u00e4lle",
+                "gender": "Male"
+            },
+            {
+                "german": "Postkarte",
+                "english": "Postcard",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Postkarten",
+                "gender": "Female"
+            },
+            {
+                "german": "Paket",
+                "english": "Package",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Pakete",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Rathaus",
+                "english": "Town Hall",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Rath\u00e4user",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Gesetz",
+                "english": "Law",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "Gesetze",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Lehrbuch",
+                "english": "Textbook",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Lehrb\u00fccher",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Beifall",
+                "english": "Applause",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Polizei",
+                "english": "Police",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Poliezeien",
+                "gender": "Female"
+            },
+            {
+                "german": "W\u00f6rterbuch",
+                "english": "Dictionary",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "W\u00f6rterb\u00fccher",
+                "gender": "Neuter"
+            },
+            {
+                "german": "\u00dcbersetzung",
+                "english": "Translation",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "\u00dcbersetzungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Spaten",
+                "english": "Spade",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Spaten",
+                "gender": "Male"
+            },
+            {
+                "german": "Regierung",
+                "english": "Government",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Regierungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Wahl",
+                "english": "Election",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Wahlen",
+                "gender": "Female"
+            },
+            {
+                "german": "Trinkgeld",
+                "english": "Tip",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Trinkgelder",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Baum",
+                "english": "Tree",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "B\u00e4ume",
+                "gender": "Male"
+            },
+            {
+                "german": "Stein",
+                "english": "Stone",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Steine",
+                "gender": "Male"
+            },
+            {
+                "german": "Wald",
+                "english": "Forest",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "W\u00e4lder",
+                "gender": "Male"
+            },
+            {
+                "german": "Stadt",
+                "english": "City",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "St\u00e4dte",
+                "gender": "Female"
+            },
+            {
+                "german": "Land",
+                "english": "Country",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "L\u00e4nder",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Student",
+                "english": "Student",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "Studenten",
+                "gender": "Male"
+            },
+            {
+                "german": "Spiegel",
+                "english": "Mirror",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Spiegel",
+                "gender": "Male"
+            },
+            {
+                "german": "Fluss",
+                "english": "River",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Fl\u00fcsse",
+                "gender": "Male"
+            },
+            {
+                "german": "Regen",
+                "english": "Rain",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Regen",
+                "gender": "Male"
+            },
+            {
+                "german": "Hotel",
+                "english": "Hotel",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Hotels",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Zimmer",
+                "english": "Room",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Zimmer",
+                "gender": "Neuter"
+            },
+            {
+                "german": "L\u00f6ffel",
+                "english": "Spoon",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "L\u00f6ffel",
+                "gender": "Male"
+            },
+            {
+                "german": "Gabel",
+                "english": "Fork",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Gabeln",
+                "gender": "Female"
+            },
+            {
+                "german": "Tasse",
+                "english": "Cup",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Tassen",
+                "gender": "Female"
+            },
+            {
+                "german": "Strasse",
+                "english": "Road",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Strassen",
+                "gender": "Female"
+            },
+            {
+                "german": "T\u00fcr",
+                "english": "Door",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "T\u00fcren",
+                "gender": "Female"
+            }
+        ]
+    },
+    {
+        "name": "Vegtables",
+        "times_played": 11,
+        "words": [
+            {
+                "german": "Gem\u00fcse",
+                "english": "Vegtables",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Gem\u00fcse",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Salat",
+                "english": "Salad",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Salate",
+                "gender": "Male"
+            },
+            {
+                "german": "Tomate",
+                "english": "Tomato",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "Tomaten",
+                "gender": "Female"
+            },
+            {
+                "german": "Blumenkohl",
+                "english": "Cauliflower",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Blumenkohle",
+                "gender": "Male"
+            },
+            {
+                "german": "Brokkoli",
+                "english": "Broccoli",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Brokkoli",
+                "gender": "Male"
+            },
+            {
+                "german": "Karotte",
+                "english": "Carrot",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Karotten",
+                "gender": "Female"
+            },
+            {
+                "german": "Sellerie",
+                "english": "Celery",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "Sellerie",
+                "gender": "Male"
+            },
+            {
+                "german": "Spinat",
+                "english": "Spinach",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "Spinate",
+                "gender": "Male"
+            },
+            {
+                "german": "Lauch",
+                "english": "Leek",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Lauche",
+                "gender": "Male"
+            },
+            {
+                "german": "Erbse",
+                "english": "Pea",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Erbsen",
+                "gender": "Female"
+            },
+            {
+                "german": "Eierfrucht",
+                "english": "Eggplant",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Eierfr\u00fcchte",
+                "gender": "Female"
+            },
+            {
+                "german": "Paprika",
+                "english": "Pepper",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Paprikas",
+                "gender": "Male"
+            },
+            {
+                "german": "Kohl",
+                "english": "Cabbage",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "Kohle",
+                "gender": "Male"
+            },
+            {
+                "german": "Knoblauch",
+                "english": "Garlic",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Knoblauchzehen",
+                "gender": "Male"
+            },
+            {
+                "german": "Zwiebel",
+                "english": "Onion",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "Zwibeln",
+                "gender": "Female"
+            },
+            {
+                "german": "Kartoffel",
+                "english": "Potato",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Kartoffeln",
+                "gender": "Female"
+            },
+            {
+                "german": "S\u00fcsskartoffel",
+                "english": "Sweet Potato",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "S\u00fcsskartoffeln",
+                "gender": "Female"
+            },
+            {
+                "german": "R\u00fcbe",
+                "english": "Turnip",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "R\u00fcben",
+                "gender": "Female"
+            },
+            {
+                "german": "Gurke",
+                "english": "Cucumber",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 13,
+                "plural": "Gurken",
+                "gender": "Female"
+            },
+            {
+                "german": "Mais",
+                "english": "Corn",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Mais",
+                "gender": "Male"
+            },
+            {
+                "german": "Spargel",
+                "english": "Asparagus",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "Spargel",
+                "gender": "Male"
+            },
+            {
+                "german": "Bohne",
+                "english": "Bean",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Bohnen",
+                "gender": "Female"
+            },
+            {
+                "german": "Pilz",
+                "english": "Mushroom",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Pilze",
+                "gender": "Male"
+            },
+            {
+                "german": "K\u00fcrbis",
+                "english": "Pumpkin",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "K\u00fcrbisse",
+                "gender": "Male"
+            }
+        ]
+    },
+    {
+        "name": "Adjectives 1",
+        "times_played": 8,
+        "words": [
+            {
+                "german": "sonnig",
+                "english": "sunny",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 7
+            },
+            {
+                "german": "bew\u00f6lkt",
+                "english": "cloudy",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 8
+            },
+            {
+                "german": "sauber",
+                "english": "clean",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 9
+            },
+            {
+                "german": "billig",
+                "english": "cheap",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 8
+            },
+            {
+                "german": "traurig",
+                "english": "sad",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 7
+            },
+            {
+                "german": "gl\u00fccklich",
+                "english": "fortunate",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 8
+            },
+            {
+                "german": "teuer",
+                "english": "expensive",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 7
+            },
+            {
+                "german": "sauer",
+                "english": "sour",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 7
+            },
+            {
+                "german": "s\u00fcss",
+                "english": "sweet",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 7
+            },
+            {
+                "german": "raffiniert",
+                "english": "refined",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 7
+            },
+            {
+                "german": "m\u00fcde",
+                "english": "tired",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 5
+            },
+            {
+                "german": "lustig",
+                "english": "cheerful",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 5
+            },
+            {
+                "german": "ber\u00fchmt",
+                "english": "famous",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 2
+            }
+        ]
+    },
+    {
+        "name": "Fruit",
+        "times_played": 14,
+        "words": [
+            {
+                "german": "Frucht",
+                "english": "Fruit",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Fr\u00fcchte",
+                "gender": "Female"
+            },
+            {
+                "german": "Apfel",
+                "english": "Apple",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "\u00c4pfel",
+                "gender": "Male"
+            },
+            {
+                "german": "Erdbeere",
+                "english": "Strawberry",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Erdbeeren",
+                "gender": "Female"
+            },
+            {
+                "german": "Blaubeere",
+                "english": "Blueberry",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Balaubeeren",
+                "gender": "Female"
+            },
+            {
+                "german": "Brombeere",
+                "english": "Blackberry",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Brombeeren",
+                "gender": "Female"
+            },
+            {
+                "german": "Himbeere",
+                "english": "Rasberry",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Himbeeren",
+                "gender": "Female"
+            },
+            {
+                "german": "Moosbeere",
+                "english": "Cranberry",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "Moosbeeren",
+                "gender": "Female"
+            },
+            {
+                "german": "Kirsche",
+                "english": "Cherry",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Kirschen",
+                "gender": "Female"
+            },
+            {
+                "german": "Traube",
+                "english": "Grape",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Trauben",
+                "gender": "Female"
+            },
+            {
+                "german": "Orange",
+                "english": "Orange",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Orangen",
+                "gender": "Female"
+            },
+            {
+                "german": "Schale",
+                "english": "Peel",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Scahlen",
+                "gender": "Female"
+            },
+            {
+                "german": "Pflaume",
+                "english": "Plum",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "Pflaumen",
+                "gender": "Female"
+            },
+            {
+                "german": "Birne",
+                "english": "Pear",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Birnen",
+                "gender": "Female"
+            },
+            {
+                "german": "Banane",
+                "english": "Banana",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Bananen",
+                "gender": "Female"
+            },
+            {
+                "german": "Feige",
+                "english": "Fig",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Feigen",
+                "gender": "Female"
+            },
+            {
+                "german": "Ananas",
+                "english": "Pineapple",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Ananas",
+                "gender": "Female"
+            },
+            {
+                "german": "Pfirsich",
+                "english": "Peach",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Pfirsiche",
+                "gender": "Male"
+            },
+            {
+                "german": "Wassermelone",
+                "english": "Watermelon",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 10,
+                "plural": "Wassermelonen",
+                "gender": "Female"
+            },
+            {
+                "german": "Zitrone",
+                "english": "Lemon",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 12,
+                "plural": "Zitronen",
+                "gender": "Female"
+            },
+            {
+                "german": "Aprikose",
+                "english": "Apricot",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Aprikosen",
+                "gender": "Female"
+            },
+            {
+                "german": "Granatapfel",
+                "english": "Pomegranate",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Granat\u00e4pfel",
+                "gender": "Male"
+            },
+            {
+                "german": "Kiwi",
+                "english": "Kiwi",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 11,
+                "plural": "Kiwis",
+                "gender": "Female"
+            }
+        ]
+    },
+    {
+        "name": "Sommerkuchen 1",
+        "times_played": 1,
+        "words": [
+            {
+                "german": "traumhaft",
+                "english": "dreamlike",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 0
+            },
+            {
+                "german": "Liebling",
+                "english": "Favorite",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Lieblinge",
+                "gender": "Male"
+            },
+            {
+                "german": "Blech",
+                "english": "Baking Tray",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Bleche",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Torte",
+                "english": "Cake",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Torten",
+                "gender": "Female"
+            },
+            {
+                "german": "backen",
+                "english": "bake",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 1,
+                "mode": 1
+            },
+            {
+                "german": "Kuchen",
+                "english": "Cake",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Kuchen",
+                "gender": "Male"
+            },
+            {
+                "german": "Honig",
+                "english": "Honey",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Mehl",
+                "english": "Flour",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Mehle",
+                "gender": "Neuter"
+            },
+            {
+                "german": "mahlen",
+                "english": "grind",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 1,
+                "mode": 1
+            },
+            {
+                "german": "Pulver",
+                "english": "Powder",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Pulver",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Prise",
+                "english": "Pinch",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Prisen",
+                "gender": "Female"
+            },
+            {
+                "german": "Salz",
+                "english": "Salt",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Salze",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Mark",
+                "english": "Puree",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Speise",
+                "english": "Food",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Speisen",
+                "gender": "Female"
+            },
+            {
+                "german": "\u00d6l",
+                "english": "Oil",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "\u00d6le",
+                "gender": "Neuter"
+            },
+            {
+                "german": "neutral",
+                "english": "neutral",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 1
+            },
+            {
+                "german": "Kern",
+                "english": "Seed",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Kerne",
+                "gender": "Male"
+            },
+            {
+                "german": "Hafer",
+                "english": "Oats",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Hafer",
+                "gender": "Male"
+            },
+            {
+                "german": "Flocke",
+                "english": "blob",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Flocken",
+                "gender": "Female"
+            },
+            {
+                "german": "Haferflocke",
+                "english": "Oatmeal",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 1,
+                "plural": "Haferflocken",
+                "gender": "Female"
+            },
+            {
+                "german": "Zimt",
+                "english": "Cinnamon",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Zimte",
+                "gender": "Male"
+            }
+        ]
+    },
+    {
+        "name": "Nouns 2",
+        "times_played": 6,
+        "words": [
+            {
+                "german": "Ankunft",
+                "english": "Arrival",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Ank\u00fcnfte",
+                "gender": "Female"
+            },
+            {
+                "german": "Titel",
+                "english": "Title",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 3,
+                "plural": "Titel",
+                "gender": "Male"
+            },
+            {
+                "german": "Substantiv",
+                "english": "Noun",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Substantive",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Kiesel",
+                "english": "Pebble",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 8,
+                "plural": "Kiesel",
+                "gender": "Male"
+            },
+            {
+                "german": "Bleistift",
+                "english": "Pencil",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 15,
+                "plural": "Bleistifte",
+                "gender": "Male"
+            },
+            {
+                "german": "Brieftasche",
+                "english": "Wallet",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Breiftaschen",
+                "gender": "Female"
+            },
+            {
+                "german": "Tisch",
+                "english": "Table",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Tische",
+                "gender": "Male"
+            },
+            {
+                "german": "Notiz",
+                "english": "Note",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Notizen",
+                "gender": "Female"
+            },
+            {
+                "german": "Wand",
+                "english": "Wall",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "W\u00e4nde",
+                "gender": "Female"
+            },
+            {
+                "german": "T\u00fcr",
+                "english": "Door",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "T\u00fcren",
+                "gender": "Female"
+            },
+            {
+                "german": "Anrichte",
+                "english": "Dresser",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 9,
+                "plural": "Anrichten",
+                "gender": "Female"
+            },
+            {
+                "german": "Sand",
+                "english": "Sand",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Sande",
+                "gender": "Male"
+            },
+            {
+                "german": "Strand",
+                "english": "Beach",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Str\u00e4nde",
+                "gender": "Male"
+            },
+            {
+                "german": "Muschel",
+                "english": "Shell",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Muscheln",
+                "gender": "Female"
+            },
+            {
+                "german": "Fleisch",
+                "english": "Meat",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "No Plural",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Blut",
+                "english": "Blood",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "No Plural",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Hemd",
+                "english": "Shirt",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Hemden",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Brille",
+                "english": "Glasses",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Brillen",
+                "gender": "Female"
+            },
+            {
+                "german": "Jacke",
+                "english": "Jacket",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Jacken",
+                "gender": "Female"
+            },
+            {
+                "german": "Hut",
+                "english": "Hat",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "H\u00fcte",
+                "gender": "Male"
+            },
+            {
+                "german": "Hose",
+                "english": "Pants",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Hosen",
+                "gender": "Female"
+            },
+            {
+                "german": "Socke",
+                "english": "Socks",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Socken",
+                "gender": "Female"
+            },
+            {
+                "german": "Schuh",
+                "english": "Shoe",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Schuhe",
+                "gender": "Male"
+            },
+            {
+                "german": "Ladeger\u00e4t",
+                "english": "Charger",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Ladeger\u00e4te",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Landkarte",
+                "english": "Map",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Landkarten",
+                "gender": "Female"
+            },
+            {
+                "german": "F\u00fcller",
+                "english": "Pen",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "F\u00fcller",
+                "gender": "Male"
+            }
+        ]
+    },
+    {
+        "name": "Colors",
+        "times_played": 3,
+        "words": [
+            {
+                "german": "orange",
+                "english": "orange",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "gelb",
+                "english": "yellow",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "gr\u00fcn",
+                "english": "green",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "hell",
+                "english": "light",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "dunkel",
+                "english": "dark",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "lila",
+                "english": "purple",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "rosa",
+                "english": "pink",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "braun",
+                "english": "brown",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "schwarz",
+                "english": "black",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "weiss",
+                "english": "white",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "grau",
+                "english": "gray",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "rot",
+                "english": "red",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 3
+            },
+            {
+                "german": "Farbe",
+                "english": "Color",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 3,
+                "plural": "Farben",
+                "gender": "Female"
+            }
+        ]
+    },
+    {
+        "name": "Months",
+        "times_played": 2,
+        "words": [
+            {
+                "german": "Januar",
+                "english": "January",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Februar",
+                "english": "February",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "M\u00e4rz",
+                "english": "March",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 3,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "April",
+                "english": "April",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 3,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Mai",
+                "english": "May",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Juni",
+                "english": "June",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Juli",
+                "english": "July",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "August",
+                "english": "August",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "September",
+                "english": "September",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Oktober",
+                "english": "October",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "November",
+                "english": "November",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Dezember",
+                "english": "December",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "Winter",
+                "english": "Winter",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Winter",
+                "gender": "Male"
+            },
+            {
+                "german": "Fr\u00fchling",
+                "english": "Spring",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Fr\u00fchlinge",
+                "gender": "Male"
+            },
+            {
+                "german": "Sommer",
+                "english": "Summer",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Sommer",
+                "gender": "Male"
+            },
+            {
+                "german": "Herbst",
+                "english": "Fall",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Herbste",
+                "gender": "Male"
+            }
+        ]
+    },
+    {
+        "name": "Pass-Durch-\u00dcber 1",
+        "times_played": 5,
+        "words": [
+            {
+                "german": "deren",
+                "english": "whose",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 7
+            },
+            {
+                "german": "Gegenstand",
+                "english": "Subject",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Gegenst\u00e4nde",
+                "gender": "Male"
+            },
+            {
+                "german": "leer",
+                "english": "empty",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 5
+            },
+            {
+                "german": "erf\u00fcllen",
+                "english": "fulfill",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 6,
+                "mode": 1
+            },
+            {
+                "german": "zitieren",
+                "english": "quote",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 9,
+                "mode": 1
+            },
+            {
+                "german": "Tracht",
+                "english": "Uniform",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Trachten",
+                "gender": "Female"
+            },
+            {
+                "german": "verstorben",
+                "english": "deceased",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 6
+            },
+            {
+                "german": "bieten",
+                "english": "give",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 6,
+                "mode": 1
+            }
+        ]
+    },
+    {
+        "name": "Bodyparts",
+        "times_played": 4,
+        "words": [
+            {
+                "german": "Kopf",
+                "english": "Head",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "K\u00f6pfe",
+                "gender": "Male"
+            },
+            {
+                "german": "Nase",
+                "english": "Nose",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Nasen",
+                "gender": "Female"
+            },
+            {
+                "german": "Mund",
+                "english": "Mouth",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "M\u00fcnder",
+                "gender": "Male"
+            },
+            {
+                "german": "Ohr",
+                "english": "Ear",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Ohren",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Nacken",
+                "english": "Neck",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "Nacken",
+                "gender": "Male"
+            },
+            {
+                "german": "Brust",
+                "english": "Chest",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Br\u00fcste",
+                "gender": "Female"
+            },
+            {
+                "german": "R\u00fccken",
+                "english": "Back",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "R\u00fccken",
+                "gender": "Male"
+            },
+            {
+                "german": "H\u00fcfte",
+                "english": "Hip",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 8,
+                "plural": "H\u00fcften",
+                "gender": "Female"
+            },
+            {
+                "german": "Abdomen",
+                "english": "Abdomen",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Abdomen",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Hintern",
+                "english": "Bottom",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "Hintern",
+                "gender": "Male"
+            },
+            {
+                "german": "Bein",
+                "english": "Leg",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 8,
+                "plural": "Beine",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Fuss",
+                "english": "Foot",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "F\u00fcsse",
+                "gender": "Male"
+            },
+            {
+                "german": "Knie",
+                "english": "Knee",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Knie",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Haar",
+                "english": "Hair",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Haare",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Auge",
+                "english": "Eye",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Augen",
+                "gender": "Neuter"
+            }
+        ]
+    },
+    {
+        "name": "Nouns 3",
+        "times_played": 6,
+        "words": [
+            {
+                "german": "Vorgang",
+                "english": "Suggestion",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Vorg\u00e4nge",
+                "gender": "Male"
+            },
+            {
+                "german": "Entscheidung",
+                "english": "Decision",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Entscheidungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Leidenschaft",
+                "english": "Passion",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Leidenschaften",
+                "gender": "Female"
+            },
+            {
+                "german": "Anzug",
+                "english": "Approach",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Anz\u00fcge",
+                "gender": "Male"
+            },
+            {
+                "german": "Werbung",
+                "english": "Advertisement",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 7,
+                "plural": "Werbungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Anschrift",
+                "english": "Address",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 3,
+                "plural": "Anschriften",
+                "gender": "Female"
+            },
+            {
+                "german": "Unterschrift",
+                "english": "Signature",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Unterschriften",
+                "gender": "Female"
+            },
+            {
+                "german": "Aufzug",
+                "english": "Elevator",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 2,
+                "plural": "Aufz\u00fcge",
+                "gender": "Male"
+            },
+            {
+                "german": "Saft",
+                "english": "Juice",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 3,
+                "plural": "S\u00e4fte",
+                "gender": "Male"
+            },
+            {
+                "german": "Scheibe",
+                "english": "window",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Scheiben",
+                "gender": "Male"
+            },
+            {
+                "german": "Liferant",
+                "english": "Deliveryman",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 3,
+                "plural": "Lieferanten",
+                "gender": "Male"
+            }
+        ]
+    },
+    {
+        "name": "Verbs 1",
+        "times_played": 4,
+        "words": [
+            {
+                "german": "entscheiden",
+                "english": "decide",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 8,
+                "mode": 1
+            },
+            {
+                "german": "erreichen",
+                "english": "reach",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "recherchieren",
+                "english": "investigate",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "\u00fcberzeugen",
+                "english": "convince",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 6,
+                "mode": 1
+            },
+            {
+                "german": "empfehlen",
+                "english": "recommend",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": 1
+            },
+            {
+                "german": "anbieten",
+                "english": "offer",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": 1
+            },
+            {
+                "german": "eilen",
+                "english": "ruch",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "erkennen",
+                "english": "recognize",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "vertrauen",
+                "english": "trust",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": 1
+            }
+        ]
+    },
+    {
+        "name": "Second Week",
+        "times_played": 4,
+        "words": [
+            {
+                "german": "herzlich",
+                "english": "warmhearted",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 6
+            },
+            {
+                "german": "verletzen",
+                "english": "hurt",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "weich",
+                "english": "soft",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 5
+            },
+            {
+                "german": "wechseln",
+                "english": "change",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "wohl",
+                "english": "certainly",
+                "part_of_speech": 4,
+                "tags": [],
+                "times_played": 4
+            },
+            {
+                "german": "R\u00fcckgeld",
+                "english": "Change",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "R\u00fcckgelder",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Korb",
+                "english": "Basket",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "K\u00f6rbe",
+                "gender": "Neuter"
+            },
+            {
+                "german": "probieren",
+                "english": "try",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "Begriff",
+                "english": "Saying",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Begriffe",
+                "gender": "Male"
+            },
+            {
+                "german": "Herausfolderung",
+                "english": "Challenge",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "Herausfolderungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Bett\u00fcberzung",
+                "english": "Bed Cover",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 6,
+                "plural": "Bett\u00fcberzungen",
+                "gender": "Female"
+            },
+            {
+                "german": "Fleck",
+                "english": "Stain",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Flecke",
+                "gender": "Male"
+            },
+            {
+                "german": "Handtuch",
+                "english": "Towel",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Handt\u00fccher",
+                "gender": "Neuter"
+            },
+            {
+                "german": "besetzen",
+                "english": "occupy",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 5,
+                "mode": 1
+            },
+            {
+                "german": "unter*nehmen",
+                "english": "undertake",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "schliesslich",
+                "english": "eventually",
+                "part_of_speech": 4,
+                "tags": [],
+                "times_played": 6
+            },
+            {
+                "german": "erkunden",
+                "english": "find out",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 4,
+                "mode": 1
+            },
+            {
+                "german": "Stunde",
+                "english": "Hour",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 4,
+                "plural": "Stunden",
+                "gender": "Female"
+            },
+            {
+                "german": "Schalter",
+                "english": "Counter",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 5,
+                "plural": "Schalter",
+                "gender": "Male"
+            },
+            {
+                "german": "get\u00e4uscht",
+                "english": "mixed up",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 4
+            }
+        ]
+    },
+    {
+        "name": "Wild 1",
+        "times_played": 0,
+        "words": [
+            {
+                "german": "geraten",
+                "english": "get in",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            },
+            {
+                "german": "Schutz",
+                "english": "Protection",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "No Plural",
+                "gender": "Male"
+            },
+            {
+                "german": "rechnen",
+                "english": "count",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            },
+            {
+                "german": "Eremit",
+                "english": "Hermit",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Eremiten",
+                "gender": "Male"
+            }
+        ]
+    },
+    {
+        "name": "Gesundheit",
+        "times_played": 0,
+        "words": [
+            {
+                "german": "mindestens",
+                "english": "at least",
+                "part_of_speech": 4,
+                "tags": [],
+                "times_played": 0
+            },
+            {
+                "german": "anstrengende",
+                "english": "exhausting",
+                "part_of_speech": 3,
+                "tags": [],
+                "times_played": 0
+            },
+            {
+                "german": "meistens",
+                "english": "mostly",
+                "part_of_speech": 4,
+                "tags": [],
+                "times_played": 0
+            },
+            {
+                "german": "Krankenschester",
+                "english": "Nurse",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Krankenschwestern",
+                "gender": "Female"
+            },
+            {
+                "german": "achten",
+                "english": "respect",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            },
+            {
+                "german": "erholen",
+                "english": "recover",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            }
+        ]
+    },
+    {
+        "name": "Die Gitarre des Herrn Hataunoglu",
+        "times_played": 0,
+        "words": [
+            {
+                "german": "schaffen",
+                "english": "cause",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            },
+            {
+                "german": "Besenstiel",
+                "english": "Broom",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Besenstiele",
+                "gender": "Male"
+            },
+            {
+                "german": "Posaune",
+                "english": "Trumpet",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Posaunen",
+                "gender": "Female"
+            },
+            {
+                "german": "ert\u00f6nen",
+                "english": "ring out",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            },
+            {
+                "german": "blasen",
+                "english": "blow",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            },
+            {
+                "german": "k\u00fcmmern",
+                "english": "concern",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            },
+            {
+                "german": "Schlagzeug",
+                "english": "drum",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Schlagzeuge",
+                "gender": "Neuter"
+            },
+            {
+                "german": "Pauke",
+                "english": "Kettledrum",
+                "part_of_speech": 1,
+                "tags": [],
+                "times_played": 0,
+                "plural": "Pauken",
+                "gender": "Female"
+            },
+            {
+                "german": "gr\u00fcssen",
+                "english": "greet",
+                "part_of_speech": 2,
+                "tags": [],
+                "times_played": 0,
+                "mode": 1
+            }
+        ]
+    },
+    {
+        "name": "W\u00f6rter 1",
+        "times_played": 0,
+        "words": []
+    }
+]
