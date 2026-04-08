@@ -2,6 +2,7 @@
 
 ## Setup Guide
 TODO (I'm never doing it, if for some reason someone is using this then create just commandeer the current saves folder, and delete every subfolder in times)
+(then download thor from the piper website, name it thor-voice.onnx and thor-voice.onnx.json, and put it in voices)
 ## That's it
 
 # TODO
@@ -10,7 +11,7 @@ TODO (I'm never doing it, if for some reason someone is using this then create j
 - [X] Edit Word - just redoes build_word filling defaults with the current data
   - [X] Add Tag - Adds a tag to the word (the tags are created elsewhere)
     - [X] It would be nice with a basic search algo but for now just sort alphabetically
-- [ ] Main Menu gets another button for registering a tag
+- [X] Main Menu gets another button for registering a tag (techically not main but)
 - [ ] (Minor) sort decks by most played. Idk how this will work with the ordering of the list, you got it
 
 ##PLAY
@@ -23,10 +24,13 @@ TODO (I'm never doing it, if for some reason someone is using this then create j
 - [ ] Query Cards with deck by Part of Speech, Gender, Plurarity, and Tags
   - [X] Query by Plurality only
   - [ ] These can be hardcoded, so don't go too crazy
+- [X] AI generated voices?!
+  - [ ] Settings for voices, maybe allow to pick between which one to use
 
 ##STATS MVP 
-- [ ] Show time studied
-  - [ ] Show time studied today, the week, the month, and lifetime, with graphs for week and month
+- [X] Show time studied
+  - [X] Show time studied today, the week, the month, and lifetime, 
+  - [ ] with graphs for week and month
 
 ##DREAM 
 - [ ] WEBSCRAPE IT

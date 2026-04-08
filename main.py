@@ -5,13 +5,22 @@
 from blessed import Terminal
 from json import dumps, loads
 from dataclasses import dataclass, field, asdict
-from random import shuffle, randint
+from random import shuffle, randint, choice
+from rapidfuzz import process
 import webbrowser as wb
 import datetime as dt
 import os as os
+import wave
+from piper import PiperVoice, SynthesisConfig
+import subprocess
 
 DECKS = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/decks.json"
 TIMES = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/times"
+VOICE = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/voices"
+AUDIO = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/audio"
+
+#for typing stuff
+valid_characters = "qwertyuiopasdfghjklzxcvbnm,./;'\"*QWERTYUAISODPFLGKJHCBXZNVMBüÜäÄöÖ 1234567890"
 
 class Part_Of_Speech:
     Noun = 1
@@ -29,6 +38,22 @@ show_speech = lambda x: {value: key for key, value in speech_map.items()}[x]
 verb_modes = ["Present", "Preterite", "Past Perfect", "Reflexive"]
 parse_mode = lambda x: {"Present": Verb_Modes.Present, "Preterite": Verb_Modes.Preterite, "Past Perfect": Verb_Modes.Past_Perfect,
                         "Reflexive": Verb_Modes.Reflexive}[x]
+
+syn_config = SynthesisConfig(
+    length_scale=1.5,  # a little slower
+)
+
+@dataclass
+class Tag:
+    tag: str 
+    refs: int
+
+    def __eq__(self, other):
+        return isinstance(other, Tag) and self.tag == other.tag
+
+    def __hash__(self):
+        return hash(self.tag)
+
 class Verb_Modes:
     Present = 1
     Preterite = 2
@@ -42,12 +67,30 @@ class Word:
     part_of_speech: int
     tags: list[str]
     deck: int = 0
+    deck_name: str = ""
     times_played: int = 0
+    def play_audio(self, voice: PiperVoice):
+        if not os.path.exists(f"{AUDIO}/{self.deck_name.replace("/", ".")}"):
+            os.mkdir(f"{AUDIO}/{self.deck_name.replace("/", ".")}")
+        if f"{self.german}.wav" not in os.listdir(f"{AUDIO}/{self.deck_name.replace("/", ".")}"):
+            with wave.open(f"{AUDIO}/{self.deck_name.replace("/", ".")}/{self.german}.wav", "wb") as wav_file:
+                voice.synthesize_wav(f"{self.german}", wav_file, syn_config=syn_config)
+        subprocess.run(["ffplay", "-nodisp", "-autoexit", f"{AUDIO}/{self.deck_name.replace("/", ".")}/{self.german}.wav"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 @dataclass
 class Noun(Word):
     plural: str = None
     gender: str = None #i cant be bothered to make an enum
+
+    def play_audio(self, voice: PiperVoice):
+        if not os.path.exists(f"{AUDIO}/{self.deck_name.replace("/", ".")}"):
+            os.mkdir(f"{AUDIO}/{self.deck_name.replace("/", ".")}")
+        articles = {"Female": "Die", "Male": "Der", "Neuter": "Das"}
+        if f"{self.german}.wav" not in os.listdir(f"{AUDIO}/{self.deck_name.replace("/", ".")}"):
+            with wave.open(f"{AUDIO}/{self.deck_name.replace("/", ".")}/{self.german}.wav", "wb") as wav_file:
+                if "No Plural" in self.tags: voice.synthesize_wav(f"{articles[self.gender]} {self.german}", wav_file, syn_config=syn_config)
+                else: voice.synthesize_wav(f"{articles[self.gender]} {self.german}, die {self.plural}", wav_file, syn_config=syn_config)
+        subprocess.run(["ffplay", "-nodisp", "-autoexit", f"{AUDIO}/{self.deck_name.replace("/", ".")}/{self.german}.wav"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 @dataclass
 class Verb(Word):
@@ -67,6 +110,7 @@ class PlayTime:
 #Type aliases in python????
 type Progress = dict[int, dict[str, dict[int, PlayTime]]]
 
+
 def deserialize(d: dict[str, str]): 
     result = []
     for item in d["words"]:
@@ -75,7 +119,6 @@ def deserialize(d: dict[str, str]):
         else: result.append(Word(**item))
 
     return Deck(d["name"], d["times_played"], result)
-
 
 def option(options: list[str], after: list[str] = None, lpadding: int = 2, rpadding: int = 3, style: str = "", sp_style: str = None, shortcuts: dict[int, str] = {}, range_: int = None, start_index = None):
     sp_style = sp_style if sp_style != None else style
@@ -115,6 +158,13 @@ def option(options: list[str], after: list[str] = None, lpadding: int = 2, rpadd
         elif key.code == term.KEY_DOWN or key == "s":
             selected_index += 1
             selected_index %= len(options)
+        elif key.code == term.KEY_RIGHT or key == "d":
+            selected_index += range_
+            selected_index %= len(options)
+        elif key.code == term.KEY_LEFT or key == "a":
+            selected_index -= range_
+            selected_index += len(options)
+            selected_index %= len(options)
         elif key == ' ' or key.code == term.KEY_ENTER: 
             return {"choice": unpadded_options[selected_index], "index": selected_index}
         elif key == "+" and shortcuts != {}:
@@ -135,7 +185,6 @@ def option(options: list[str], after: list[str] = None, lpadding: int = 2, rpadd
 
 def get_text(term: Terminal, prompt: str, starting: str = "", shortcuts: dict = {}):
     txt = starting
-    valid_characters = "qwertyuiopasdfghjklzxcvbnm,./;'\"*QWERTYUAISODPFLGKJHCBXZNVMBüÜäÄöÖ 1234567890"
     umlauts = {"u":"ü", "a": 'ä', "o":"ö","U":"Ü", "A": 'Ä', "O":"Ö"}
     while True:
         print(prompt)
@@ -186,7 +235,6 @@ def down(term: Terminal) -> str:
     return term.move_y(5)
 
 term = Terminal()
-menu_options = ['Edit Decks', 'Play', 'Stats', "Exit"]
 menu_style = lambda x: header(x, ["Choose an option"]) + down(x)
 
 def init():
@@ -197,29 +245,40 @@ def init():
         _ = term.inkey()
 
 def menu():
-    decks = save([])
+    menu_options = ['Edit Decks', 'Play', 'Stats', "Exit"]
+    tags = set()
+    decks = save([], tags=tags)
     times = save_time(None, None)
+    selected_tag = []
     loop = True
     stack = []
+    voice = PiperVoice.load(f"{VOICE}/thor-voice.onnx")
     while loop:
-        shortcuts = {}
+        shortcuts = {"n": "Save Decks"}
         if len(stack) > 0:
             shortcuts["p"] = "Pop Item Off Stack"
             shortcuts["P"] = "Pop all Items Off Stack"
             shortcuts["l"] = "Show Top of Stack"
             shortcuts["L"] = "Show all Stack"
+        if selected_tag != None and len(selected_tag) == 1:
+            shortcuts['t'] = "Show Selected Tag"
+
         choice = option(menu_options, style=menu_style(term), sp_style=(menu_style(term) + term.move_y(3)), shortcuts=shortcuts)['choice']
-        if choice == menu_options[0]: decks = create_deck(decks, stack)
+        if choice == menu_options[0]: decks = create_deck(term, decks, stack, tags, selected_tag, voice)
         elif choice == menu_options[1]: 
-            (decks, new_time) = start_play(decks, times, stack)
+            (decks, new_time) = start_play(decks, times, stack, voice)
             if new_time != None: 
                 times = save_time(times, new_time)
         elif choice == menu_options[2]:
-            print("Still not implemented, but here's the data")
-            print(times)
-            with term.cbreak(), term.hidden_cursor():
-                _ = term.inkey()
+            show_times(times)
         elif choice == menu_options[3]: loop = False
+        elif choice == shortcuts['n']:
+            decks = save(decks)
+            print(term.clear)
+            print(menu_style(term))
+            print(term.black_on_plum1(term.center(f"Saved!")))
+            with term.cbreak(), term.hidden_cursor():
+                key = term.inkey()
         elif len(stack) > 0 and choice == shortcuts['p']:
             pop = stack.pop()
             print(term.clear)
@@ -252,9 +311,14 @@ def menu():
                 print(term.black_on_plum1(term.center(f"[{show_translation(item["word"])}]")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
+        elif selected_tag != None and len(selected_tag) == 1 and choice == shortcuts['t']:
+            print(term.clear)
+            print(menu_style(term))
+            print(term.black_on_plum1(term.center(f"Selected Tag: {selected_tag[0].tag}")))
+            with term.cbreak(), term.hidden_cursor():
+                key = term.inkey()
 
     decks = save(decks)
-    times = save_time(None, None)
 
 def show_translation(word: Word, plural=False):
     if word.part_of_speech == Part_Of_Speech.Verb:
@@ -272,7 +336,7 @@ def show_translation(word: Word, plural=False):
         return word.english + " - " + word.german
 
 speech_options = ["Noun", "Verb", "Adjective", "Adverb", "Preposition", "Phrase"]
-def edit_word(term: Terminal, selected_deck: Deck, speech: str, defaults: list[str] = None, edit: bool = False):
+def edit_word(term: Terminal, selected_deck: Deck, deck_index: int, speech: str, defaults: list[str] = None, edit: bool = False):
     if speech == speech_options[0]:
         head = [f"Edit {speech} {defaults[0]} in {selected_deck.name}"] if edit else [f"Add {speech} to {selected_deck.name}"]
         prompt = header(term, head)
@@ -285,7 +349,7 @@ def edit_word(term: Terminal, selected_deck: Deck, speech: str, defaults: list[s
         read = build_word(term, prompt, ["German Singular:", "German Plural:", "English Singular:"], defaults=defaults)
         gender = option(["Male", "Female", "Neuter"], style = gender_prompt)
 
-        return Noun(read[0], read[2], Part_Of_Speech.Noun, [], plural=read[1],gender=gender['choice'])
+        return Noun(read[0], read[2], Part_Of_Speech.Noun, [], deck_index, selected_deck.name, plural=read[1],gender=gender['choice'])
     elif speech == speech_options[1]:
         head = [f"Edit {speech} {defaults[0]} in {selected_deck.name}"] if edit else [f"Add {speech} to {selected_deck.name}"]
         prompt = header(term, head)
@@ -297,7 +361,7 @@ def edit_word(term: Terminal, selected_deck: Deck, speech: str, defaults: list[s
         read = build_word(term, prompt, ["German:", "English:"], defaults=defaults)
         mode = option(verb_modes, style=mode_prompt)
 
-        return Verb(read[0], read[1], Part_Of_Speech.Verb, [], mode=parse_mode(mode['choice']))
+        return Verb(read[0], read[1], Part_Of_Speech.Verb, [], deck_index, selected_deck.name, mode=parse_mode(mode['choice']))
 
     elif speech in speech_options[2:-1]:
         head = [f"Edit {speech} {defaults[0]} in {selected_deck.name}"] if edit else [f"Add {speech} to {selected_deck.name}"]
@@ -306,19 +370,22 @@ def edit_word(term: Terminal, selected_deck: Deck, speech: str, defaults: list[s
 
         read = build_word(term, prompt, ["German:", "English:"], defaults=defaults)
 
-        return Word(read[0], read[1], parse_speech(speech), [])
+        return Word(read[0], read[1], parse_speech(speech), [], deck_index, selected_deck.name)
     else:
         print(speech)
 
-def handle_deck(decks, deck_index, stack, jump = None): 
+def handle_deck(decks, deck_index, stack, tags, selected_tag, voice, jump = None): 
     selected_deck = decks[deck_index]
     extra_options = ["-------", "Add a Word", "Go Back"]
-    shortcuts = {"-": "Decrement Plays", "_": "Zero Plays", "k": "Delete Word", "!": "Go Back", "o": "Push on Stack"}
+    shortcuts = {"-": "Decrement Plays", "_": "Zero Plays", "k": "Delete Word", "!": "Go Back", "o": "Push on Stack", "v": "Play Generated Pronunciation"}
     selected_index = 0
     if jump != None: 
         for index, item in enumerate(selected_deck.words):
             if item == jump:
                 selected_index = index
+    if selected_tag != None and len(selected_tag) == 1:
+        shortcuts['T'] = "Add Selected Tag"
+        shortcuts['t'] = "Show Selected Tag"
     deck_loop = True
 
     while deck_loop:
@@ -333,7 +400,7 @@ def handle_deck(decks, deck_index, stack, jump = None):
             head = header(term, ["Edit " + selected_deck.name])
             choice = option(speech_options, style=(head + down(term)))
 
-            selected_deck.words.append(edit_word(term, selected_deck, choice['choice']))
+            selected_deck.words.append(edit_word(term, selected_deck, deck_index, choice['choice']))
         elif choice['choice'] == shortcuts['-']:
             selected_index = choice['index']
             selected_deck.times_played -= 1
@@ -343,13 +410,33 @@ def handle_deck(decks, deck_index, stack, jump = None):
         elif choice ['choice'] == shortcuts["k"]:
             if choice['index'] < len(selected_deck.words):
                 selected_index = choice['index']
+                if os.path.exists(f"{AUDIO}/{selected_deck.words[choice['index']].deck_name.replace("/", ".")}/{selected_deck.words[choice['index']].german}.wav"):
+                    subprocess.run(["rm", "-f", f"{AUDIO}/{selected_deck.words[choice['index']].deck_name.replace("/", ".")}/{selected_deck.words[choice['index']].german}.wav"])
                 del selected_deck.words[choice['index']]
+        elif choice["choice"] == shortcuts["v"]:
+            if choice['index'] < len(selected_deck.words): 
+                selected_index = choice['index']
+                selected_deck.words[choice['index']].play_audio(voice)
+
         elif choice['choice'] == shortcuts["!"]:
             deck_loop = False
         elif choice['choice'] == shortcuts["o"]:
             if choice['index'] < len(selected_deck.words):
                 selected_index = choice['index']
                 stack.append({"word": selected_deck.words[choice['index']], "deck": deck_index})
+        elif selected_tag != None and len(selected_tag) == 1 and choice['choice'] == shortcuts['T']:
+            if choice['index'] < len(selected_deck.words):
+                selected_word = selected_deck.words[choice['index']]
+                fake_tags = set(map(lambda x: Tag(x, 0), selected_word.tags))
+                if selected_tag[0] not in fake_tags:
+                    selected_tag[0].refs += 1
+                    selected_word.tags.append(selected_tag[0].tag)
+        elif selected_tag != None and len(selected_tag) == 1 and choice['choice'] == shortcuts['t']:
+            print(term.clear)
+            print(menu_style(term))
+            print(term.black_on_plum1(term.center(f"Selected Tag: {selected_tag[0].tag}")))
+            with term.cbreak(), term.hidden_cursor():
+                key = term.inkey()
         else: #a word is selected
             word_loop = True
             selected_word = selected_deck.words[choice['index']]
@@ -358,23 +445,50 @@ def handle_deck(decks, deck_index, stack, jump = None):
                     "Edit " + selected_deck.name, f"Played {str(selected_deck.times_played)} times. {len(selected_deck.words)} words.",
                     "Edit " + selected_word.german, f"Played {str(selected_word.times_played)} times."
                 ])
-                #              0          1             2           3          4
-                options = ["Add Tag", "Edit Word", "Open Forvo", "Delete", "Go Back"]
+                #              0          1             2           3                      4                              5                      6
+                options = ["Add Tag", "Show Tags", "Edit Word", "Open Forvo", "Play Generated Pronunciation", "Delete Generated Pronunciation", "Delete", "Go Back"]
 
                 choice = option(options, style=(head + term.move_y(5)))
 
-                if choice["choice"] == options[2]: wb.open(f"https://forvo.com/search/{selected_word.german}/de", new=2)
-                elif choice['choice'] == options[3]: selected_deck.words.remove(selected_word)
-
-
+                if choice["choice"] == options[3]: wb.open(f"https://forvo.com/search/{selected_word.german}/de", new=2)
+                elif choice["choice"] == options[4]: selected_word.play_audio(voice)
+                elif choice["choice"] == options[5]: 
+                    if os.path.exists(f"{AUDIO}/{selected_word.deck_name.replace("/", ".")}/{selected_word.german}.wav"):
+                        subprocess.run(["rm", "-f", f"{AUDIO}/{selected_word.deck_name.replace("/", ".")}/{selected_word.german}.wav"])
+                elif choice['choice'] == options[6]: 
+                    if os.path.exists(f"{AUDIO}/{selected_word.deck_name.replace("/", ".")}/{selected_word.german}.wav"):
+                        subprocess.run(["rm", "-f", f"{AUDIO}/{selected_word.deck_name.replace("/", ".")}/{selected_word.german}.wav"])
+                    selected_deck.words.remove(selected_word)
+                elif choice['choice'] == options[0]: 
+                    fake_tags = set(map(lambda x: Tag(x, 0), selected_word.tags))
+                    pos_tags = tags - fake_tags
+                    new_tag = show_matches(term, pos_tags, 4, style_without_down=head)
+                    if new_tag != None:
+                        new_tag.refs += 1
+                        selected_word.tags.append(new_tag.tag)
                 elif choice['choice'] == options[1]:
-                    if selected_word.part_of_speech == Part_Of_Speech.Noun:
+                    in_tags = set(filter(lambda x: x.tag in selected_word.tags, tags))
+                    if len(in_tags) > 0: 
+                        show_matches(term, in_tags, 4, style_without_down=head)
+                    else:
+                        print(term.clear)
+                        print(head)
+                        print(term.center(term.white_on_black("Word has no tags!")))
+                        print(term.move_down(2))
+                        with term.cbreak(), term.hidden_cursor():
+                            _ = term.inkey()
+                        
+
+
+
+                elif choice['choice'] == options[2]:
+                    if selected_word.part_of_speech == Part_Of_Speech.Noun: #why does this branch?? not even god knows
                         defaults = [selected_word.german, selected_word.plural, selected_word.english]
-                        new_word = edit_word(term, selected_deck, "Noun", defaults=defaults, edit=True)
+                        new_word = edit_word(term, selected_deck, deck_index, "Noun", defaults=defaults, edit=True)
                         new_word.times_played = selected_word.times_played
                     else:
                         defaults = [selected_word.german, selected_word.english]
-                        new_word = edit_word(term, selected_deck, show_speech(selected_word.part_of_speech), defaults=defaults, edit=True)
+                        new_word = edit_word(term, selected_deck, deck_index, show_speech(selected_word.part_of_speech), defaults=defaults, edit=True)
                         new_word.times_played = selected_word.times_played
 
 
@@ -391,13 +505,91 @@ def choose_deck(head: str, decks: list[Deck], extra_options: list[str], head_sma
     after = list(map(lambda x: " | Played " + str(x.times_played) + " times.", filtered))
     return {"filtered": filtered, "option": option(options + extra_options, style=head, sp_style=head_small, after=after, shortcuts=shortcuts, start_index=start_index)}
 
-def create_deck(decks, stack):
+#work!
+def show_matches(term, on: set[Tag], show: int, style_without_down: str = "", add: bool = False, selected_tag=None) -> None | Tag | str:
+    on2 = list(on)
+    search = ""
+    start_index = 0
+
+    while True:
+        print(style_without_down)
+        print(term.black_on_plum(term.center("Press '!' to exit")))
+        print(down(term))
+
+        print(term.black_on_plum1(term.center(f"{"Add" if add else "Search"}: {search}")))
+        print(term.move_down(1))
+
+        selected = process.extract(search, map(lambda x: x.tag, on2))
+        for index, x in enumerate(selected[start_index:show+start_index]):
+            if x[0] == search: print(term.black_on_paleturquoise(f"  {index + start_index + 1}. {x[0]:<35}| Used {on2[x[2]].refs} Times"))
+            else: print(term.black_on_paleturquoise1(f"  {index + start_index + 1}. {x[0]:<35}| Used {on2[x[2]].refs} Times"))
+
+        with term.cbreak(), term.hidden_cursor():
+            key = term.inkey()
+
+        if key.code == term.KEY_UP and start_index > 0: start_index -= 1
+        elif key.code == term.KEY_DOWN and start_index < show - 1: start_index += 1
+        elif key.code == term.KEY_BACKSPACE: search = search[0:-1]
+        elif key.code == term.KEY_ENTER: 
+            if add: 
+                if len(on2) == 0:
+                    return search
+                elif on2[selected[start_index][2]].tag == search:
+                    return on2[selected[start_index][2]]
+                else: return search
+            else: 
+                if selected_tag != None: 
+                    if len(selected_tag) > 0: selected_tag.pop()
+                    selected_tag.append(on2[selected[start_index][2]])
+                return on2[selected[start_index][2]]
+        elif key == "!": break
+        elif key in valid_characters: search += key
+
+    return None
+
+
+def handle_tags(term, tags: set[Tag], selected_tag: list[Tag]):
+    head = header(term, ["Edit Decks", "Register Tags"]) + down(term)
+    options = ["Browse Tags", "Select Tag", "Add Tags", "Go Back"]
+    loop = True
+    while loop:
+        choice = option(options, style=head)
+        if choice['choice'] == options[0]:
+            head2 = header(term, ["Edit Decks", "Register Tags", "Browse Tags"])
+            show_matches(term, tags, 3, style_without_down=head2)
+        elif choice['choice'] == options[1]:
+            head2 = header(term, ["Edit Decks", "Register Tags", "Browse Tags"])
+            show_matches(term, tags, 3, style_without_down=head2, selected_tag=selected_tag)
+
+        elif choice['choice'] == options[2]:
+            head2 = header(term, ["Edit Decks", "Register Tags", "Add Tag"])
+            res = show_matches(term, tags, 3, style_without_down=head2, add=True)
+            if type(res) == Tag:
+                print(term.clear)
+                print(head2)
+                print(term.move_down(2))
+                print(term.white_on_black(term.center(f"Tag already exists!")))
+                with term.cbreak(), term.hidden_cursor():
+                    _ = term.inkey()
+            elif res == None: pass
+            else:
+                print(term.clear)
+                print(head2)
+                print(term.move_down(2))
+                print(term.black_on_plum(term.center(f"Added {res}!")))
+                tags.add(Tag(res, 0))
+                with term.cbreak(), term.hidden_cursor():
+                    _ = term.inkey()
+
+        else: loop = False
+
+def create_deck(term, decks, stack, tags, selected_tag, voice):
     loop = True
     selected_index = 0
 
     while loop:
         head = header(term, ["Edit Decks"]) + down(term)
-        extra_options = ["-------","Make a Deck", "Go Back"]
+        extra_options = ["-------","Make a Deck", "Register Tags", "Go Back"]
         shortcuts = {"-": "Decrement Plays", "_": "Zero Plays", "k": "Kill Deck"}
         if len(stack) > 0:
             shortcuts["p"] = "Pop Item Off Stack"
@@ -413,6 +605,8 @@ def create_deck(decks, stack):
             name = get_text(term, prompt)
             print(term.black_on_plum(term.center("Deck Created!")))
             return decks + [Deck(name=name)]
+        elif choice['choice'] == extra_options[2]:
+            handle_tags(term, tags, selected_tag)
         elif choice['choice'] == shortcuts["-"]:
             if choice['index'] < len(decks): #valid deck
                 decks[choice['index']].times_played -= 1 
@@ -430,7 +624,13 @@ def create_deck(decks, stack):
                 with term.cbreak(), term.hidden_cursor():
                     key = term.inkey()
                 if key == "k":
+                    if os.path.exists(f"{AUDIO}/{attempt}"):
+                        print("hello")
+                        with term.cbreak(), term.hidden_cursor():
+                            key = term.inkey()
+                        subprocess.run(["rm", "-rf", f"{AUDIO}/{attempt.replace("/", ".")}"])
                     new_decks = [deck for deck in decks if deck.name != attempt]
+                    
                 else: continue
 
                 return new_decks
@@ -468,11 +668,11 @@ def create_deck(decks, stack):
                 key = term.inkey()
         elif len(stack) > 0 and choice['choice'] == shortcuts['j']:
             pop = stack.pop()
-            handle_deck(decks, pop["deck"], stack, jump=pop["word"])
+            handle_deck(decks, pop["deck"], stack, tags, selected_tag, voice, jump=pop["word"])
 
 
-        elif choice['choice'] == extra_options[2]: loop = False #goback
-        else: handle_deck(decks, choice["index"], stack)  
+        elif choice['choice'] == extra_options[3]: loop = False #goback
+        else: handle_deck(decks, choice["index"], stack, tags, selected_tag, voice)  
 
     return decks  
 
@@ -480,7 +680,7 @@ def ask(word, english, plural):
     result = {"prompt": None, "question": None, "answer": None}
     if english:
         result["question"] = word.english
-        if word.part_of_speech == Part_Of_Speech.Noun and plural():
+        if word.part_of_speech == Part_Of_Speech.Noun and plural() and "No Plural" not in word.tags:
             result["prompt"] = word.english + " (Plural)"
             result['answer'] = word.plural
             result['plural'] = True
@@ -519,13 +719,14 @@ def get_current_time(p: Progress) -> int:
             return p[today.year][int_to_month(today.month)][today.day].time
         except: return 0 #terrible code who cares
 
-def play(title, words, english, plurals, times, stack):
+def play(title, words, english, plurals, times, stack, voice, always_play):
     safe_div = lambda x, y: 0 if y == 0 else x / y
     shuffle(words)
     plural_lam = (lambda: False) if plurals == 0 else (lambda: True) if plurals == 1 else (lambda: randint(0,1) == 1)
     cards = list(map(lambda x: ask(x, english, plural_lam), words))
     hint = False
     speech = False
+    tag_hint = False
     redo = False
     show_time = False
     show_time_all = False
@@ -542,6 +743,9 @@ def play(title, words, english, plurals, times, stack):
                 , f"{str(wins)} out of {str(wins + losses)} words. {(safe_div(wins, wins + losses)*100):.2f}% success rate."]
         if hint: head_txt.append("Hint: " + cards[index]['answer'][0] + "*" * (len(cards[index]['answer']) - 2) + cards[index]['answer'][-1])
         elif speech: head_txt.append("Part of Speech: " + show_speech(words[index].part_of_speech))
+        elif tag_hint: 
+            random_tag = choice(words[index].tags)
+            head_txt.append(f"Has Tag: {random_tag}")
         elif show_time:
             show_time = False 
             now = dt.datetime.now()
@@ -554,27 +758,57 @@ def play(title, words, english, plurals, times, stack):
 
         head = header(term, head_txt)
         head += term.move_y(5) + term.black_on_plum(term.center( cards[index]['prompt']))
-        shortcuts = {"#": "Show first and last letter", "@": "Show part of speech", "!": "Quit", "?": "Show answer", "%": "Show Time Spent", "^": "Show Total Time Spent"}
+        shortcuts = { "`": "Play Audio Hint (Causes Loss)"
+                    , "#": "Show First and Last Letter", "@": "Show Part of Speech", "!": "Quit", "?": "Show Answer"
+                     , "%": "Show Time Spent", "^": "Show Total Time Spent"}
+        if len(words[index].tags) > 0:
+            shortcuts["$"] = "Show Tag Hint"
         guess = get_text(term, head, shortcuts=shortcuts)
 
         if guess == shortcuts["#"]: 
             hint = True
             speech = False
+            tag_hint = False
+            show_time = False 
+            show_time_all = False
             continue
         elif guess == shortcuts["@"]:
             speech = True 
             hint = False
+            tag_hint = False
+            show_time = False 
+            show_time_all = False
+            continue
+        elif len(words[index].tags) and guess == shortcuts["$"]:
+            tag_hint = True
+            speech = False
+            hint = False
+            show_time = False 
+            show_time_all = False
             continue
         elif guess == shortcuts["!"]:
             break
         elif guess == shortcuts["?"]:
             if not redo: losses += 1 # we need to do it here because redo ignores losses in the main part
             redo = True
+        elif guess == shortcuts["`"]:
+            if not redo: losses += 1
+            words[index].play_audio(voice)
+            redo = True
+            continue
         elif guess == shortcuts["%"]:
             show_time = True 
+            tag_hint = False
+            speech = False
+            hint = False
+            show_time_all = False
             continue
         elif guess == shortcuts["^"]:
-            show_time_all = True 
+            show_time_all = True
+            tag_hint = False
+            speech = False
+            hint = False
+            show_time = False 
             continue
 
         if guess_equal(guess, cards[index]['answer']):
@@ -589,12 +823,17 @@ def play(title, words, english, plurals, times, stack):
         words[index].times_played += 1
         hint = False
         speech = False
+        tag_hint = False
 
+        if always_play: words[index].play_audio(voice)
         while True:
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
 
-            after_options = {"!": "Quit", "c": "Give win", "r": "Redo last word", "p": "Open forvo pronunciation", "P": "Show forvo pronunciation link", "o": "Push onto Stack"}
+            #why is this so dumb, like how do I have technical debt after 1 day of coding
+            after_options = {"!": "Quit", "c": "Give win", "r": "Redo last word", "p": "Open forvo pronunciation"
+                             , "P": "Show forvo pronunciation link", "o": "Push onto Stack"
+                             , "v": "Play Generated Pronunciation", "V": "Stop Playing Pronunciation" if always_play else "Always Play Pronunciation"}
             if words[index].part_of_speech == Part_Of_Speech.Noun: after_options["?"] = "Show noun plural and gender"
             if key == "!":
                 loop = False
@@ -614,12 +853,18 @@ def play(title, words, english, plurals, times, stack):
                     print(term.black_on_plum(term.center("The plural form is: " + words[index].plural)))
                     print(term.black_on_plum(term.center("The gender is: " + words[index].gender)))
                 continue
-            elif key == "h":
+            elif key == "+":
                 for key, value in after_options.items():
                     print(term.black_on_plum1(term.center(f"[{key}]: {value:>30}")))
                 continue
             elif key == "o":
                 stack.append({"word": words[index], "deck": words[index].deck})
+            elif key == "v":
+                words[index].play_audio(voice)
+                continue
+            elif key == "V": 
+                always_play = not always_play
+                continue
 
             break
 
@@ -649,19 +894,70 @@ def play(title, words, english, plurals, times, stack):
     end = dt.datetime.now()
     return int((end - start).total_seconds())
 
-def start_play(decks, times, stack):
+
+def show_times(times: Progress): 
+    year = None 
+    month = None 
+    loop = True
+
+    selected_index = 0
+    shortcuts = {"t": "Show Today", "!": "Go Back"}
+    
+    while loop:
+        if year == None:
+            head = header(term, ["Browse Times", "Select Year"])
+            options = list(map(str, times.keys())) + ["-------", "Go Back", "Exit"]
+        elif month == None:
+            head = header(term, ["Browse Times", "Select Year", "Select Month"])
+            options = list(map(str, times[int(year)].keys())) + ["-------", "Go Back", "Exit"]
+        else: 
+            head = header(term, ["Browse Times", "Select Year", "Select Month", "View By Day"])
+            options = list(map(str, times[int(year)][month].keys())) 
+            options = sorted(options)
+            options += ["-------", "Go Back", "Exit"]
+        if year == None or month == None: choice = option(options, style=(head + down(term)), shortcuts=shortcuts)    
+        else: 
+            after = list(map(lambda x: f"{x:>40}", map(show_playtime, map(lambda x: times[int(year)][month][x].time, sorted(times[int(year)][month].keys())))))
+            choice = option(options, style=(head + down(term)), after=after, shortcuts=shortcuts, start_index=selected_index)    
+        if choice['choice'] == options[-1]: loop = False 
+        elif choice['choice'] == options[-2] or choice['choice'] == shortcuts['!']: 
+            if month != None: month = None
+            elif year != None: year = None
+        elif choice['choice'] == shortcuts['t']:
+            today = dt.date.today()
+            year = str(today.year)
+            month = int_to_month(today.month)
+            if times[int(year)][month].get(today.day):
+                options = list(times[int(year)][month].keys()) 
+                options = sorted(options)
+                selected_index = options.index(today.day)
+
+
+        else:
+            if year == None: 
+                selected_index = 0
+                year = options[int(choice['index'])]
+            elif month == None: 
+                selected_index = 0
+                month = options[choice["index"]]
+            else: selected_index = choice['index']
+            
+
+def start_play(decks, times, stack, voice):
     head = header(term, ["Play"])
     options = list(map(lambda x: x.name , decks))
     after = list(map(lambda x: " | Played " + str(x.times_played) + " times.", decks))
     options += ["Go Back"]
     shortcuts = {} if len(stack) <= 0 else {"j": "Use Stack as Deck"}
-    choice = option(options, style=(head + down(term)), after=after, shortcuts=shortcuts)
+    choice = option(options, style=(head + down(term)), after=after)
+    always_play = False
+
 
     if choice['choice'] == options[-1]:
         return (decks, None)
     else:
         stop = "Continue with current deck"
-        exit_ = "Go back to Deck menu" #different than stop, this is for leaving ntirely
+        exit_ = "Exit" #different than stop, this is for leaving ntirely
         exit_flag = False
         selected_decks = []
 
@@ -700,29 +996,33 @@ def start_play(decks, times, stack):
             options = [
                 some_plurals if plurals == 0 else with_plurals if plurals == 0.5 else without_plurals,  #cycle
                 "Play with all words" if ten_or_less else "Play only words played 10 times or less", #bool cycle
+                "Stop Playing Voices" if always_play else "Always Play Voices",
                 "-------", exit_, stop
             ]
 
-            choice = option(options, style=(head + down(term)))
+            shortcuts = {"V": "Stop Playing Voices" if always_play else "Always Play Voices"}
+            choice = option(options, style=(head + down(term)), shortcuts=shortcuts)
 
             if choice['choice'] == stop: break 
             elif choice['choice'] == exit_: exit_flag = True # i don't want to recurse here because the call stack can't be even more sphagetti
             elif choice['choice'] == without_plurals: plurals = 0
             elif choice['choice'] == some_plurals: plurals = 0.5
             elif choice['choice'] == with_plurals: plurals = 1
+            elif choice['choice'] == options[2]: always_play = not always_play
             elif choice['choice'] == options[1]: ten_or_less = not ten_or_less
+            elif choice['choice'] == shortcuts["V"]: always_play = not always_play
         if not exit_flag:
             head = header(term, ["Play", "English or German?"])
             choice = option(["English -> German", "German -> English"], style=(head + down(term)))
 
             actual_words = list(filter(lambda x: x.times_played <= 10, words)) if ten_or_less else words
-            play_time = play(name, actual_words, True if choice['index'] == 0 else False, plurals, times, stack)
+            play_time = play(name, actual_words, True if choice['index'] == 0 else False, plurals, times, stack, voice, always_play)
             for item in selected_decks: item.times_played += 1
             return (decks, play_time)
         else:
             return (decks, None)
 
-def save(decks):
+def save(decks, tags: set[Tag] = None):
     try:
         if decks == None or len(decks) == 0: 
             file = open(DECKS, 'r')
@@ -731,6 +1031,21 @@ def save(decks):
             for index, deck in enumerate(decks):
                 for word in deck.words:
                     word.deck = index
+                    #patching tags
+                    if "*" in word.german and "trennbar" not in word.tags: word.tags.append("trennbar")
+                    if type(word) == Noun and word.plural.lower().replace(" ", "") == "noplural" and "No Plural" not in word.tags: word.tags.append("No Plural")
+                    for u in ["ü", "Ü", "ä", "Ä", "ö", "Ö"]:
+                        if u in word.german and "Has Umlauts" not in word.tags: 
+                            word.tags.append("Has Umlauts")
+                            break
+                    for tagstr in word.tags:
+                        new = Tag(tagstr, 1)
+                        found = False
+                        for tag in tags:
+                            if tag == new: 
+                                tag.refs += 1
+                                found = True
+                        if not found: tags.add(new)
         else:
             dicts = list(map(asdict, decks))
             json_output = dumps(dicts, indent=4)
@@ -745,8 +1060,8 @@ def save(decks):
 
 def int_to_month(m: int) -> str:
     months = [
-        "january", "february", "march", "april", "may", "june",
-        "july", "august", "september", "october", "november", "december"
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
     ]
     
     if 0 <= m <= 11:
@@ -771,6 +1086,10 @@ def save_time(time: Progress | None, today_time: int | None):
         else:
 
             today = dt.datetime.today()
+            if not os.path.exists(f"{TIMES}/{today.year}"):
+                os.mkdir(f"{TIMES}/{today.year}")
+            if not os.path.exists(f"{TIMES}/{today.year}/{int_to_month(today.month)}"):
+                os.mkdir(f"{TIMES}/{today.year}/{int_to_month(today.month)}")
             if not os.path.exists(f"{TIMES}/{today.year}/{int_to_month(today.month)}/{today.day}.txt"):
                 file = open(f"{TIMES}/{today.year}/{int_to_month(today.month)}/{today.day}.txt", "w")
                 file.close() # to create it
@@ -803,9 +1122,12 @@ menu()
 #EDIT DECKS - 
     #✅Option menu when clicking on a word
         #Edit Word - just redoes build_word filling defaults with the current data
-        #Add Tag - Adds a tag to the word (the tags are created elsewhere)
-            #It would be nice with a basic search algo but for now just sort alphabetically
-    #Main Menu gets another button for registering a tag
+        #✅Add Tag - Adds a tag to the word (the tags are created elsewhere)
+            #✅It would be nice with a basic search algo but for now just sort alphabetically
+    #✅(in deck creation but still a menu)Main Menu gets another button for registering a tag
+    #store tag metadata in its own file
+    #so that the tags can find what the references them
+    #thus allowing for playing off of selected tag
     #(Minor) sort decks by most played. Idk how this will work with the ordering of the list, you got it
 
     #PLAY MVP 
@@ -821,8 +1143,8 @@ menu()
         #Query Cards with deck by Part of Speech, Gender, Plurarity, and Tags
             #These can be hardcoded, so don't go too crazy
 
-    #add a "Stack" so you can select a word while playing
-    #and then jump to it to edit
+    #✅add a "Stack" so you can select a word while playing
+    #✅and then jump to it to edit
 
     #STATS MVP 
         #Show time studied
