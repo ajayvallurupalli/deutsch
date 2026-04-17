@@ -6,6 +6,7 @@ from blessed import Terminal
 from json import dumps, loads
 from dataclasses import dataclass, field, asdict
 from random import shuffle, randint, choice
+import random as rand
 from rapidfuzz import process
 import webbrowser as wb
 import datetime as dt
@@ -18,6 +19,7 @@ DECKS = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/decks.json"
 TIMES = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/times"
 VOICE = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/voices"
 AUDIO = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/audio"
+PALETTE = "/Users/ajayvallurupalli/the-playground/work/deutsch/saves/palette"
 
 #for typing stuff
 valid_characters = "qwertyuiopasdfghjklzxcvbnm,./;'\"*QWERTYUAISODPFLGKJHCBXZNVMBüÜäÄöÖ 1234567890"
@@ -110,7 +112,6 @@ class PlayTime:
 #Type aliases in python????
 type Progress = dict[int, dict[str, dict[int, PlayTime]]]
 
-
 def deserialize(d: dict[str, str]): 
     result = []
     for item in d["words"]:
@@ -120,17 +121,28 @@ def deserialize(d: dict[str, str]):
 
     return Deck(d["name"], d["times_played"], result)
 
-def option(options: list[str], after: list[str] = None, lpadding: int = 2, rpadding: int = 3, style: str = "", sp_style: str = None, shortcuts: dict[int, str] = {}, range_: int = None, start_index = None):
+def option(options: list[str], after: list[str] = None, lpadding: int = 2, rpadding: int = 3, 
+           style: str = "", sp_style: str = None, shortcuts: dict[int, str] = {}, range_: int = None, 
+           start_index = None, end = [], insert_buffer=False):
     sp_style = sp_style if sp_style != None else style
     range_ = term.height // 2 - 5 if range_ == None else range_
+    buffer = "-------"
+    end = end.copy()
+    if insert_buffer: end.insert(0, buffer)
     after = [] if after == None else after
-    after += [""] * (len(options) - len(after))
+    after += [""] * (len(options) + len(end) - len(after))
+    if len(end) > 0: range_ -= len(end)
     selected_index = 0 if start_index == None else start_index
-    unpadded_options = options.copy()
+    unpadded_options = options.copy() + end
+    end = end.copy()
     options = options.copy()
     max_length = max(map(len, options))
+    max_length_after = max(map(len, after))
     for i, x in enumerate(options): options[i] = x.ljust(max_length + rpadding)
+    for i, x in enumerate(end): end[i] = x.ljust(max_length + rpadding)
+    for i, x in enumerate(after): after[i] = x.ljust(max_length_after + rpadding)
     for i, _ in enumerate(options): options[i] = options[i] + after[i]
+    for i, _ in enumerate(end): end[i] = end[i] + after[i + len(options)]
     while True:
         print(style)
         if selected_index <= range_:
@@ -142,9 +154,10 @@ def option(options: list[str], after: list[str] = None, lpadding: int = 2, rpadd
         else:
             bottom = selected_index - range_
             ranged_options = options[bottom:min(len(options), selected_index + range_ + 1)]
+        ranged_options += end
         for index, option in enumerate(ranged_options):
             if index == (selected_index - bottom):
-                print(term.bold + term.black_on_paleturquoise1(' ' * lpadding + f"{option}")) # Highlight selected option
+                print(term.bold + term.select_color(' ' * lpadding + f"{option}")) # Highlight selected option
             else:
                 print(' ' * lpadding + f"{option}")
 
@@ -153,31 +166,33 @@ def option(options: list[str], after: list[str] = None, lpadding: int = 2, rpadd
 
         if key.code == term.KEY_UP or key == "w":
             selected_index -= 1
-            selected_index += len(options)
-            selected_index %= len(options)
+            selected_index += len(options) + len(end)
+            selected_index %= len(options) + len(end)
         elif key.code == term.KEY_DOWN or key == "s":
             selected_index += 1
-            selected_index %= len(options)
+            selected_index %= len(options) + len(end)
         elif key.code == term.KEY_RIGHT or key == "d":
             selected_index += range_
-            selected_index %= len(options)
+            selected_index %= len(options) + len(end)
         elif key.code == term.KEY_LEFT or key == "a":
             selected_index -= range_
-            selected_index += len(options)
-            selected_index %= len(options)
-        elif key == ' ' or key.code == term.KEY_ENTER: 
+            selected_index += len(options) + len(end)
+            selected_index %= len(options) + len(end)
+        elif key.code == term.KEY_TAB: 
+            selected_index = len(options) + (-1 if len(end) == 0 else 1)
+        elif (key == ' ' or key.code == term.KEY_ENTER) and unpadded_options[selected_index] != buffer: 
             return {"choice": unpadded_options[selected_index], "index": selected_index}
         elif key == "+" and shortcuts != {}:
             print(term.clear)
             print(sp_style)
             for key, value in shortcuts.items():
-                if key != "+": print(term.black_on_plum1(term.center(f"[{key}]: {value:>30}")))
+                if key != "+": print(term.header_main_alt(term.center(f"[{key}]: {value:>30}")))
             
 
             print()
             print()
             print()
-            print(term.black_on_plum1(term.center(f"Press any key to go back")))
+            print(term.header_main_alt(term.center(f"Press any key to go back")))
             with term.cbreak(), term.hidden_cursor():
                 _ = term.inkey()
         elif key in shortcuts:
@@ -188,7 +203,7 @@ def get_text(term: Terminal, prompt: str, starting: str = "", shortcuts: dict = 
     umlauts = {"u":"ü", "a": 'ä', "o":"ö","U":"Ü", "A": 'Ä', "O":"Ö"}
     while True:
         print(prompt)
-        print(term.black_on_plum1(term.center(txt)))
+        print(term.header_main_alt(term.center(txt)))
         with term.cbreak(), term.hidden_cursor():
             key = term.inkey()
 
@@ -207,7 +222,7 @@ def get_text(term: Terminal, prompt: str, starting: str = "", shortcuts: dict = 
             txt = txt[0:-1]
         elif key == "+" and shortcuts != {}:
             for key, value in shortcuts.items():
-                if key != "+": print(term.black_on_plum1(term.center(f"[{key}]: {value:>30}")))
+                if key != "+": print(term.header_main_alt(term.center(f"[{key}]: {value:>30}")))
             with term.cbreak(), term.hidden_cursor():
                 _ = term.inkey()
         elif key in shortcuts:
@@ -220,7 +235,7 @@ def build_word(term: Terminal, prompt: str, fields: list[str], defaults: list[st
     results = []
     
     for index, element in enumerate(fields):
-        prompt2 = prompt + term.black_on_plum(term.center("Enter " + element))
+        prompt2 = prompt + term.header_main(term.center("Enter " + element))
         results.append(get_text(term, prompt2, starting=defaults[index]))
 
     return results
@@ -228,7 +243,7 @@ def build_word(term: Terminal, prompt: str, fields: list[str], defaults: list[st
 def header(term: Terminal, heads: list[str]):
     start = term.clear + term.home + term.move_y(0)
     for h in heads:
-        start += term.black_on_plum(term.center(h))
+        start += term.header_main(term.center(h))
     return start
 
 def down(term: Terminal) -> str:
@@ -237,15 +252,110 @@ def down(term: Terminal) -> str:
 term = Terminal()
 menu_style = lambda x: header(x, ["Choose an option"]) + down(x)
 
+#this feels so jank
+#but it works so ???
+term.select_color = lambda x: term.black_on_paleturquoise1(x)
+term.main_select_color = lambda x: term.black_on_paleturquoise(x)
+term.header_main = lambda x: term.black_on_plum(x)
+term.header_main_alt = lambda x: term.black_on_plum1(x)
+term.special_color = lambda x: term.white_on_black(x)
+
+palettes = {
+    "Turquoise Plum (Default)": {
+        "select_color": lambda x: term.black_on_paleturquoise1(x),
+        "main_select_color": lambda x: term.black_on_paleturquoise(x),
+        "header_main": lambda x: term.black_on_plum(x),
+        "header_main_alt": lambda x: term.black_on_plum1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Ocean Breeze": {
+        "select_color": lambda x: term.black_on_skyblue1(x),
+        "main_select_color": lambda x: term.black_on_skyblue(x),
+        "header_main": lambda x: term.black_on_steelblue(x),
+        "header_main_alt": lambda x: term.black_on_steelblue1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Forest Canopy": {
+        "select_color": lambda x: term.black_on_palegreen1(x),
+        "main_select_color": lambda x: term.black_on_palegreen(x),
+        "header_main": lambda x: term.black_on_darkolivegreen(x),
+        "header_main_alt": lambda x: term.black_on_darkolivegreen1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Sunset Glow": {
+        "select_color": lambda x: term.black_on_lightsalmon1(x),
+        "main_select_color": lambda x: term.black_on_lightsalmon(x),
+        "header_main": lambda x: term.black_on_indianred(x),
+        "header_main_alt": lambda x: term.black_on_indianred1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Royal Court": {
+        "select_color": lambda x: term.black_on_mediumpurple1(x),
+        "main_select_color": lambda x: term.black_on_mediumpurple(x),
+        "header_main": lambda x: term.black_on_goldenrod(x),
+        "header_main_alt": lambda x: term.black_on_goldenrod1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Soft Rose": {
+        "select_color": lambda x: term.black_on_hotpink1(x),
+        "main_select_color": lambda x: term.black_on_hotpink(x),
+        "header_main": lambda x: term.black_on_rosybrown(x),
+        "header_main_alt": lambda x: term.black_on_rosybrown1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Neon Nights": {
+        "select_color": lambda x: term.black_on_springgreen1(x),
+        "main_select_color": lambda x: term.black_on_springgreen(x),
+        "header_main": lambda x: term.black_on_orchid(x),
+        "header_main_alt": lambda x: term.black_on_orchid1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Earth Tones": {
+        "select_color": lambda x: term.black_on_navajowhite1(x),
+        "main_select_color": lambda x: term.black_on_navajowhite(x),
+        "header_main": lambda x: term.black_on_chocolate(x),
+        "header_main_alt": lambda x: term.black_on_chocolate1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+
+    "Cyber Punk": {
+        "select_color": lambda x: term.black_on_cyan1(x),
+        "main_select_color": lambda x: term.black_on_cyan3(x), # cyan doesn't have a standard 'cyan', cyan3 is darker
+        "header_main": lambda x: term.black_on_darkorange(x),
+        "header_main_alt": lambda x: term.black_on_darkorange1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    
+    "Slate Monochrome": {
+        "select_color": lambda x: term.black_on_slategray1(x),
+        "main_select_color": lambda x: term.black_on_slategray(x),
+        "header_main": lambda x: term.black_on_grey50(x), 
+        "header_main_alt": lambda x: term.black_on_grey70(x), # higher number = lighter grey
+        "special_color": lambda x: term.white_on_black(x)
+    }
+}
+
 def init():
+    #done in init function so that the title is the right color
+    palette = save_palette()
+    for attr_name, color_func in palettes[palette].items():
+        setattr(term, attr_name, color_func)
+
     print(term.home + term.clear + term.move_y(term.height // 2))
-    print(term.black_on_paleturquoise1(term.center('press any key to continue.')))
+    print(term.select_color(term.center('press any key to continue.')))
 
     with term.cbreak(), term.hidden_cursor():
         _ = term.inkey()
 
 def menu():
-    menu_options = ['Edit Decks', 'Play', 'Stats', "Exit"]
+    menu_options = ['Edit Decks', 'Play', 'Stats', "Change Palette", "Exit"]
     tags = set()
     decks = save([], tags=tags)
     times = save_time(None, None)
@@ -253,8 +363,9 @@ def menu():
     loop = True
     stack = []
     voice = PiperVoice.load(f"{VOICE}/thor-voice.onnx")
+    palette = save_palette() #i dont care who cares
     while loop:
-        shortcuts = {"n": "Save Decks"}
+        shortcuts = {"n": "Save Decks", "r": "Set Random Palette", "R": "Set Palette to Default"}
         if len(stack) > 0:
             shortcuts["p"] = "Pop Item Off Stack"
             shortcuts["P"] = "Pop all Items Off Stack"
@@ -271,59 +382,89 @@ def menu():
                 times = save_time(times, new_time)
         elif choice == menu_options[2]:
             show_times(times)
-        elif choice == menu_options[3]: loop = False
+        elif choice == menu_options[3]: 
+            head = header(term, ["Change Palettte"])
+            dumb_dict = {} #so we can keep key
+            for key, value in palettes.items():
+                dumb_dict[key] = [key, value]
+            search = match(term, head, dumb_dict, lambda x, y: f"{x:<40}")
+            if search != None: 
+                palette = search[0]
+                for attr_name, color_func in search[1].items():
+                    setattr(term, attr_name, color_func)
+        elif choice == menu_options[4]: loop = False
         elif choice == shortcuts['n']:
             decks = save(decks)
             print(term.clear)
             print(menu_style(term))
-            print(term.black_on_plum1(term.center(f"Saved!")))
+            print(term.header_main_alt(term.center(f"Saved!")))
+            with term.cbreak(), term.hidden_cursor():
+                key = term.inkey()
+        elif choice == shortcuts['r']:
+            random = rand.choice(list(palettes))
+            for attr_name, color_func in palettes[random].items():
+                setattr(term, attr_name, color_func)
+
+            print(term.clear)
+            print(menu_style(term))
+            print(term.header_main_alt(term.center(f"Set Palette to {random}!")))
+            with term.cbreak(), term.hidden_cursor():
+                key = term.inkey()
+        elif choice == shortcuts["R"]:
+            for attr_name, color_func in palettes["Turquoise Plum (Default)"].items():
+                setattr(term, attr_name, color_func)   
+
+            print(term.clear)
+            print(menu_style(term))
+            print(term.header_main_alt(term.center(f"Set Palette to Turquoise Plum (Default)!")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif len(stack) > 0 and choice == shortcuts['p']:
             pop = stack.pop()
             print(term.clear)
             print(menu_style(term))
-            print(term.black_on_plum1(term.center(f"Popped [{show_translation(pop["word"])}] off")))
+            print(term.header_main_alt(term.center(f"Popped [{show_translation(pop["word"])}] off")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
-        elif len(stack) > 0 and choice== shortcuts["P"]:
+        elif len(stack) > 0 and choice == shortcuts["P"]:
             print(term.clear)
             print(menu_style(term))
             while len(stack) > 0:
                 pop = stack.pop()
-                print(term.black_on_plum1(term.center(f"Popped [{show_translation(pop["word"])}] off")))
+                print(term.header_main_alt(term.center(f"Popped [{show_translation(pop["word"])}] off")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif len(stack) > 0 and choice == shortcuts['l']:
             pop = stack.pop()
             print(term.clear)
             print(menu_style(term))
-            print(term.black_on_plum1(term.center(f"Top of Stack: ")))
-            print(term.black_on_plum1(term.center(f"[{show_translation(pop["word"])}]")))
+            print(term.header_main_alt(term.center(f"Top of Stack: ")))
+            print(term.header_main_alt(term.center(f"[{show_translation(pop["word"])}]")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
             stack.append(pop)
         elif len(stack) > 0 and choice == shortcuts['L']:
             print(term.clear)
             print(menu_style(term))
-            print(term.black_on_plum1(term.center(f"Stack: ")))
+            print(term.header_main_alt(term.center(f"Stack: ")))
             for item in stack:
-                print(term.black_on_plum1(term.center(f"[{show_translation(item["word"])}]")))
+                print(term.header_main_alt(term.center(f"[{show_translation(item["word"])}]")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif selected_tag != None and len(selected_tag) == 1 and choice == shortcuts['t']:
             print(term.clear)
             print(menu_style(term))
-            print(term.black_on_plum1(term.center(f"Selected Tag: {selected_tag[0].tag}")))
+            print(term.header_main_alt(term.center(f"Selected Tag: {selected_tag[0].tag}")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
 
     decks = save(decks)
+    save_palette(palette)
 
 def show_translation(word: Word, plural=False):
     if word.part_of_speech == Part_Of_Speech.Verb:
         if word.mode == Verb_Modes.Reflexive:
-            return "To " + word.english + " - " + word.german + " sich"
+            return "To " + word.english + " - " + "sich " + word.german
         else:
             return "To " + word.english + " - " + word.german
     elif word.part_of_speech == Part_Of_Speech.Noun:
@@ -390,7 +531,7 @@ def handle_deck(decks, deck_index, stack, tags, selected_tag, voice, jump = None
 
     while deck_loop:
         #head and options need to be in the loop because they can change
-        head = header(term, ["Edit " + selected_deck.name, f"Played {str(selected_deck.times_played)} times. {len(selected_deck.words)} words."])
+        head = header(term, ["Edit " + selected_deck.name, f"Played {str(selected_deck.times_played):0>2} times. {len(selected_deck.words)} words."])
         options = list(map(lambda x: show_translation(x), selected_deck.words)) + extra_options
         choice = option(options, style=(head + down(term)), sp_style=(head + down(term) + term.move_y(3)), shortcuts=shortcuts, start_index=selected_index)
         if choice['choice'] == options[-3]: continue
@@ -434,7 +575,7 @@ def handle_deck(decks, deck_index, stack, tags, selected_tag, voice, jump = None
         elif selected_tag != None and len(selected_tag) == 1 and choice['choice'] == shortcuts['t']:
             print(term.clear)
             print(menu_style(term))
-            print(term.black_on_plum1(term.center(f"Selected Tag: {selected_tag[0].tag}")))
+            print(term.header_main_alt(term.center(f"Selected Tag: {selected_tag[0].tag}")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         else: #a word is selected
@@ -448,7 +589,8 @@ def handle_deck(decks, deck_index, stack, tags, selected_tag, voice, jump = None
                 #              0          1             2           3                      4                              5                      6
                 options = ["Add Tag", "Show Tags", "Edit Word", "Open Forvo", "Play Generated Pronunciation", "Delete Generated Pronunciation", "Delete", "Go Back"]
 
-                choice = option(options, style=(head + term.move_y(5)))
+                word_shortcuts = {"!": "Go Back"}
+                choice = option(options, style=(head + term.move_y(5)), shortcuts=word_shortcuts)
 
                 if choice["choice"] == options[3]: wb.open(f"https://forvo.com/search/{selected_word.german}/de", new=2)
                 elif choice["choice"] == options[4]: selected_word.play_audio(voice)
@@ -473,14 +615,11 @@ def handle_deck(decks, deck_index, stack, tags, selected_tag, voice, jump = None
                     else:
                         print(term.clear)
                         print(head)
-                        print(term.center(term.white_on_black("Word has no tags!")))
+                        print(term.center(special_color_on_black("Word has no tags!")))
                         print(term.move_down(2))
                         with term.cbreak(), term.hidden_cursor():
                             _ = term.inkey()
-                        
-
-
-
+                elif choice['choice'] == word_shortcuts["!"]: word_loop = False
                 elif choice['choice'] == options[2]:
                     if selected_word.part_of_speech == Part_Of_Speech.Noun: #why does this branch?? not even god knows
                         defaults = [selected_word.german, selected_word.plural, selected_word.english]
@@ -502,10 +641,47 @@ def choose_deck(head: str, decks: list[Deck], extra_options: list[str], head_sma
     head_small = head_small if head_small != None else head
     filtered = list(filter(pred, decks))
     options = list(map(lambda x: x.name, filtered))
-    after = list(map(lambda x: " | Played " + str(x.times_played) + " times.", filtered))
-    return {"filtered": filtered, "option": option(options + extra_options, style=head, sp_style=head_small, after=after, shortcuts=shortcuts, start_index=start_index)}
+    after = list(map(lambda x: f" | Played {str(x.times_played):0>2} times.", filtered))
+    return {"filtered": filtered, "option": option(options, style=head, sp_style=head_small, after=after
+                                                   , shortcuts=shortcuts, start_index=start_index, end=extra_options
+                                                   , range_=term.height // 2 - 3)}
 
-#work!
+def match[T](term: Terminal, header: str, on: dict[str, T], show_T, show_size: int = None) -> T | None:
+    search = ""
+    start_index = 0
+    show_size = term.height // 2 if show_size == None else show_size
+    skip = False
+
+    while True:
+        if not skip: #this prevents some flickering
+            print(term.clear + header)
+            print(term.header_main(term.center("Press '!' to exit")))
+
+            print(term.header_main_alt(term.center(f"Search: '{search}'")))
+            print(term.move_down(1))
+
+            selected = process.extract(search, list(on), limit=None)
+            for i, x in enumerate(selected[start_index:show_size+start_index]):
+                if x[0] == search: print(term.main_select_color(f"  {i + start_index + 1:0<2}: {show_T(x[0], x[2])}"))
+                else: print(term.select_color(f"  {i + start_index + 1:0>2}: {show_T(x[0], x[2])}"))
+        else: skip = False
+
+        with term.cbreak(), term.hidden_cursor():
+            key = term.inkey()
+
+        if key.code == term.KEY_UP and start_index > 0: start_index -= 1
+        elif key.code == term.KEY_DOWN and start_index < len(on) - show_size: start_index += 1
+        elif key.code == term.KEY_BACKSPACE: search = search[0:-1]
+        elif key.code == term.KEY_ENTER: 
+            return on[selected[0][0]]
+        elif key == "!": break
+        elif key in valid_characters: search += key
+        else: skip = True
+
+    return None
+
+
+#TODO: merge with match[T]
 def show_matches(term, on: set[Tag], show: int, style_without_down: str = "", add: bool = False, selected_tag=None) -> None | Tag | str:
     on2 = list(on)
     search = ""
@@ -513,16 +689,16 @@ def show_matches(term, on: set[Tag], show: int, style_without_down: str = "", ad
 
     while True:
         print(style_without_down)
-        print(term.black_on_plum(term.center("Press '!' to exit")))
+        print(term.header_main(term.center("Press '!' to exit")))
         print(down(term))
 
-        print(term.black_on_plum1(term.center(f"{"Add" if add else "Search"}: {search}")))
+        print(term.header_main_alt(term.center(f"{"Add" if add else "Search"}: {search}")))
         print(term.move_down(1))
 
         selected = process.extract(search, map(lambda x: x.tag, on2))
         for index, x in enumerate(selected[start_index:show+start_index]):
-            if x[0] == search: print(term.black_on_paleturquoise(f"  {index + start_index + 1}. {x[0]:<35}| Used {on2[x[2]].refs} Times"))
-            else: print(term.black_on_paleturquoise1(f"  {index + start_index + 1}. {x[0]:<35}| Used {on2[x[2]].refs} Times"))
+            if x[0] == search: print(term.main_select_color(f"  {index + start_index + 1}. {x[0]:<35}| Used {on2[x[2]].refs:0>2} Times"))
+            else: print(term.select_color(f"  {index + start_index + 1}. {x[0]:<35}| Used {on2[x[2]].refs:0>2} Times"))
 
         with term.cbreak(), term.hidden_cursor():
             key = term.inkey()
@@ -568,7 +744,7 @@ def handle_tags(term, tags: set[Tag], selected_tag: list[Tag]):
                 print(term.clear)
                 print(head2)
                 print(term.move_down(2))
-                print(term.white_on_black(term.center(f"Tag already exists!")))
+                print(special_color_on_black(term.center(f"Tag already exists!")))
                 with term.cbreak(), term.hidden_cursor():
                     _ = term.inkey()
             elif res == None: pass
@@ -576,7 +752,7 @@ def handle_tags(term, tags: set[Tag], selected_tag: list[Tag]):
                 print(term.clear)
                 print(head2)
                 print(term.move_down(2))
-                print(term.black_on_plum(term.center(f"Added {res}!")))
+                print(term.header_main(term.center(f"Added {res}!")))
                 tags.add(Tag(res, 0))
                 with term.cbreak(), term.hidden_cursor():
                     _ = term.inkey()
@@ -589,8 +765,8 @@ def create_deck(term, decks, stack, tags, selected_tag, voice):
 
     while loop:
         head = header(term, ["Edit Decks"]) + down(term)
-        extra_options = ["-------","Make a Deck", "Register Tags", "Go Back"]
-        shortcuts = {"-": "Decrement Plays", "_": "Zero Plays", "k": "Kill Deck"}
+        extra_options = ["-------","Make a Deck", "Register Tags", "Search For a Deck", "Go Back"]
+        shortcuts = {"-": "Decrement Plays", "_": "Zero Plays", "k": "Kill Deck", "!": "Go Back"}
         if len(stack) > 0:
             shortcuts["p"] = "Pop Item Off Stack"
             shortcuts["P"] = "Pop all Items Off Stack"
@@ -603,7 +779,7 @@ def create_deck(term, decks, stack, tags, selected_tag, voice):
             prompt = header(term, ["Edit Decks", "Name new Deck"]) + down(term)
 
             name = get_text(term, prompt)
-            print(term.black_on_plum(term.center("Deck Created!")))
+            print(term.header_main(term.center("Deck Created!")))
             return decks + [Deck(name=name)]
         elif choice['choice'] == extra_options[2]:
             handle_tags(term, tags, selected_tag)
@@ -615,12 +791,13 @@ def create_deck(term, decks, stack, tags, selected_tag, voice):
             if choice["index"] < len(decks):
                 decks[choice["index"]].times_played = 0
             selected_index = choice['index']
+        elif choice['choice'] == shortcuts["!"]: loop = False
         elif choice['choice'] == shortcuts["k"]:
             if choice["index"] < len(decks):
                 attempt = decks[choice["index"]].name
                 print(term.clear)
                 print(head)
-                print(term.white_on_black(term.center("Are you sure you want to delete {attempt} deck? Press [k] to actually delete.")))
+                print(special_color_on_black(term.center("Are you sure you want to delete {attempt} deck? Press [k] to actually delete.")))
                 with term.cbreak(), term.hidden_cursor():
                     key = term.inkey()
                 if key == "k":
@@ -638,7 +815,7 @@ def create_deck(term, decks, stack, tags, selected_tag, voice):
             pop = stack.pop()
             print(term.clear)
             print(head)
-            print(term.black_on_plum1(term.center(f"Popped [{show_translation(pop["word"])}] off")))
+            print(term.header_main_alt(term.center(f"Popped [{show_translation(pop["word"])}] off")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif len(stack) > 0 and choice['choice'] == shortcuts["P"]:
@@ -646,24 +823,24 @@ def create_deck(term, decks, stack, tags, selected_tag, voice):
             print(head)
             while len(stack) > 0:
                 pop = stack.pop()
-                print(term.black_on_plum1(term.center(f"Popped [{show_translation(pop["word"])}] off")))
+                print(term.header_main_alt(term.center(f"Popped [{show_translation(pop["word"])}] off")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif len(stack) > 0 and choice['choice'] == shortcuts['l']:
             pop = stack.pop()
             print(term.clear)
             print(head)
-            print(term.black_on_plum1(term.center(f"Top of Stack: ")))
-            print(term.black_on_plum1(term.center(f"[{show_translation(pop["word"])}]")))
+            print(term.header_main_alt(term.center(f"Top of Stack: ")))
+            print(term.header_main_alt(term.center(f"[{show_translation(pop["word"])}]")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
             stack.append(pop)
         elif len(stack) > 0 and choice['choice'] == shortcuts['L']:
             print(term.clear)
             print(head)
-            print(term.black_on_plum1(term.center(f"Stack: ")))
+            print(term.header_main_alt(term.center(f"Stack: ")))
             for item in stack:
-                print(term.black_on_plum1(term.center(f"[{show_translation(item["word"])}]")))
+                print(term.header_main_alt(term.center(f"[{show_translation(item["word"])}]")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif len(stack) > 0 and choice['choice'] == shortcuts['j']:
@@ -671,7 +848,14 @@ def create_deck(term, decks, stack, tags, selected_tag, voice):
             handle_deck(decks, pop["deck"], stack, tags, selected_tag, voice, jump=pop["word"])
 
 
-        elif choice['choice'] == extra_options[3]: loop = False #goback
+        elif choice['choice'] == extra_options[4]: loop = False #goback
+        elif choice['choice'] == extra_options[3]:
+            decks_dict = {}
+            for i, d in enumerate(decks):
+                decks_dict[d.name] = i    
+            search = match(term, header(term, ["Edit Decks", "Search for a Deck"])
+                           , decks_dict, lambda x, y: f"{x:<40} | Played {str(decks[y].times_played):0>2} times.")
+            if type(search) == int: handle_deck(decks, search, stack, tags, selected_tag, voice)  
         else: handle_deck(decks, choice["index"], stack, tags, selected_tag, voice)  
 
     return decks  
@@ -757,7 +941,7 @@ def play(title, words, english, plurals, times, stack, voice, always_play):
             head_txt.append(f"Time Spent: {show_playtime(this + today)}")
 
         head = header(term, head_txt)
-        head += term.move_y(5) + term.black_on_plum(term.center( cards[index]['prompt']))
+        head += term.move_y(5) + term.header_main(term.center( cards[index]['prompt']))
         shortcuts = { "`": "Play Audio Hint (Causes Loss)"
                     , "#": "Show First and Last Letter", "@": "Show Part of Speech", "!": "Quit", "?": "Show Answer"
                      , "%": "Show Time Spent", "^": "Show Total Time Spent"}
@@ -812,11 +996,11 @@ def play(title, words, english, plurals, times, stack, voice, always_play):
             continue
 
         if guess_equal(guess, cards[index]['answer']):
-            print(term.move_y(2) + term.black_on_plum(term.center(f"Nice job with {guess}! Press any key to continue.")))
+            print(term.move_y(2) + term.header_main(term.center(f"Nice job with {guess}! Press any key to continue.")))
             if redo: redo = False #exits redo mode
             else: wins += 1
         else:
-            print(term.move_y(2) + term.black_on_plum(term.center(f"Unfortunately, it's {cards[index]['answer']}. Press any key to continue.")))
+            print(term.move_y(2) + term.header_main(term.center(f"Unfortunately, it's {cards[index]['answer']}. Press any key to continue.")))
             fails.append({"word": words[index], "plural": cards[index]['plural']})
             if not redo: losses += 1
 
@@ -846,16 +1030,16 @@ def play(title, words, english, plurals, times, stack, voice, always_play):
                 wb.open(f"https://forvo.com/search/{words[index].german}/de", new=2)
                 continue
             elif key == "P":
-                print(term.black_on_plum(term.center(f"https://forvo.com/search/{words[index].german}/de")))
+                print(term.header_main(term.center(f"https://forvo.com/search/{words[index].german}/de")))
                 continue
             elif key == "?":
                 if words[index].part_of_speech == Part_Of_Speech.Noun:
-                    print(term.black_on_plum(term.center("The plural form is: " + words[index].plural)))
-                    print(term.black_on_plum(term.center("The gender is: " + words[index].gender)))
+                    print(term.header_main(term.center("The plural form is: " + words[index].plural)))
+                    print(term.header_main(term.center("The gender is: " + words[index].gender)))
                 continue
             elif key == "+":
                 for key, value in after_options.items():
-                    print(term.black_on_plum1(term.center(f"[{key}]: {value:>30}")))
+                    print(term.header_main_alt(term.center(f"[{key}]: {value:>30}")))
                 continue
             elif key == "o":
                 stack.append({"word": words[index], "deck": words[index].deck})
@@ -877,12 +1061,12 @@ def play(title, words, english, plurals, times, stack, voice, always_play):
 
     print(header(term, head))
     if len(fails) > 0:
-        print(term.move_y(5) + term.black_on_plum(term.center("Words to practice:")))
+        print(term.move_y(5) + term.header_main(term.center("Words to practice:")))
         for x in fails:
-            print(term.black_on_plum(term.center(show_translation(x['word'], x['plural']))))
+            print(term.header_main(term.center(show_translation(x['word'], x['plural']))))
     
-    print(term.move_down(2) + term.black_on_plum(term.center("Completed press any key to continue")))
-    if (len(fails) > 0): print(term.black_on_plum(term.center("Press [o] to push fails onto stack")))
+    print(term.move_down(2) + term.header_main(term.center("Completed press any key to continue")))
+    if (len(fails) > 0): print(term.header_main(term.center("Press [o] to push fails onto stack")))
     with term.cbreak(), term.hidden_cursor():
         key = term.inkey()
     added = []
@@ -913,7 +1097,7 @@ def show_times(times: Progress):
         else: 
             head = header(term, ["Browse Times", "Select Year", "Select Month", "View By Day"])
             options = list(map(str, times[int(year)][month].keys())) 
-            options = sorted(options)
+            options = sorted(options, key=int)
             options += ["-------", "Go Back", "Exit"]
         if year == None or month == None: choice = option(options, style=(head + down(term)), shortcuts=shortcuts)    
         else: 
@@ -946,81 +1130,103 @@ def show_times(times: Progress):
 def start_play(decks, times, stack, voice):
     head = header(term, ["Play"])
     options = list(map(lambda x: x.name , decks))
-    after = list(map(lambda x: " | Played " + str(x.times_played) + " times.", decks))
-    options += ["Go Back"]
+    after = list(map(lambda x: f" | Played {str(x.times_played):0>2} times.", decks))
+    end = ["Search for a Deck", "Go Back"]
     shortcuts = {} if len(stack) <= 0 else {"j": "Use Stack as Deck"}
-    choice = option(options, style=(head + down(term)), after=after)
     always_play = False
+    loop = True
 
-
-    if choice['choice'] == options[-1]:
-        return (decks, None)
-    else:
-        stop = "Continue with current deck"
-        exit_ = "Exit" #different than stop, this is for leaving ntirely
-        exit_flag = False
-        selected_decks = []
-
-        if choice['choice'] == shortcuts.get("j"):
-            name = "Stack"
-            words = []
-            while(stack != []): words.append(stack.pop()["word"])
-        else:
-            selected_decks = [decks[choice["index"]]]
-
-            sub_choice = None
-            name = selected_decks[0].name
-            words = []
-            words += selected_decks[0].words
-            while not exit_flag:
-                head = header(term, ["Play", "Build Deck", f"Current Deck: {name} with {len(words)} cards."]) + down(term)
-                extra_options = ["-------", exit_, stop]
-                choose_output = choose_deck(head, decks, extra_options, pred=lambda x: x.name not in map(lambda y: y.name, selected_decks))
-                sub_choice = choose_output["option"]
-                new_decks = choose_output["filtered"] #since the filtering will reorder it
-                if sub_choice['choice'] == stop: break 
-                elif sub_choice['choice'] == exit_: exit_flag = True # i don't want to recurse here because the call stack can't be even more sphagetti
-                elif sub_choice["choice"] == "-------": continue
-                else:
-                    name +=  " + " + new_decks[sub_choice['index']].name
-                    words += new_decks[sub_choice['index']].words
-                    selected_decks.append(new_decks[sub_choice['index']])
-
-        with_plurals = "Play with plural forms"
-        without_plurals = "Play without plural forms"
-        some_plurals = "Play with 50% plural forms"
-        ten_or_less = False
-        plurals = 0
-        while not exit_flag:
-            head = header(term, ["Play", f"Current Deck: {name} with {len(words)} cards.", "Options"]) + down(term)
-            options = [
-                some_plurals if plurals == 0 else with_plurals if plurals == 0.5 else without_plurals,  #cycle
-                "Play with all words" if ten_or_less else "Play only words played 10 times or less", #bool cycle
-                "Stop Playing Voices" if always_play else "Always Play Voices",
-                "-------", exit_, stop
-            ]
-
-            shortcuts = {"V": "Stop Playing Voices" if always_play else "Always Play Voices"}
-            choice = option(options, style=(head + down(term)), shortcuts=shortcuts)
-
-            if choice['choice'] == stop: break 
-            elif choice['choice'] == exit_: exit_flag = True # i don't want to recurse here because the call stack can't be even more sphagetti
-            elif choice['choice'] == without_plurals: plurals = 0
-            elif choice['choice'] == some_plurals: plurals = 0.5
-            elif choice['choice'] == with_plurals: plurals = 1
-            elif choice['choice'] == options[2]: always_play = not always_play
-            elif choice['choice'] == options[1]: ten_or_less = not ten_or_less
-            elif choice['choice'] == shortcuts["V"]: always_play = not always_play
-        if not exit_flag:
-            head = header(term, ["Play", "English or German?"])
-            choice = option(["English -> German", "German -> English"], style=(head + down(term)))
-
-            actual_words = list(filter(lambda x: x.times_played <= 10, words)) if ten_or_less else words
-            play_time = play(name, actual_words, True if choice['index'] == 0 else False, plurals, times, stack, voice, always_play)
-            for item in selected_decks: item.times_played += 1
-            return (decks, play_time)
-        else:
+    while loop:
+        choice = option(options, style=(head + down(term)), after=after, shortcuts=shortcuts,end=end,insert_buffer=True)
+        if choice["choice"] == end[0]:
+            decks_dict = {}
+            for i, d in enumerate(decks):
+                decks_dict[d.name] = i    
+            search = match(term, header(term, ["Play", "Search for a Deck"]), decks_dict, lambda x, y: f"{x:<40} | Played {str(decks[y].times_played):0>2} times.")
+            if type(search) == int: 
+                choice["index"] = search
+                choice['choice'] = decks[search]
+                loop = False
+        elif choice['choice'] == end[1]:
             return (decks, None)
+        else: loop = False
+    
+
+    stop = "Continue with current deck"
+    exit_ = "Exit" #different than stop, this is for leaving ntirely
+    exit_flag = False
+    selected_decks = []
+
+    if choice['choice'] == shortcuts.get("j"):
+        name = "Stack"
+        words = []
+        while(stack != []): words.append(stack.pop()["word"])
+    else:
+        selected_decks = [decks[choice["index"]]]
+
+        sub_choice = None
+        name = selected_decks[0].name
+        words = []
+        words += selected_decks[0].words
+        while not exit_flag:
+            head = header(term, ["Play", "Build Deck", f"Current Deck: {name} with {len(words)} cards."]) + down(term)
+            extra_options = ["-------", "Search for a Deck", exit_, stop]
+            choose_output = choose_deck(head, decks, extra_options, pred=lambda x: x.name not in map(lambda y: y.name, selected_decks))
+            sub_choice = choose_output["option"]
+            new_decks = choose_output["filtered"] #since the filtering will reorder it
+            if sub_choice['choice'] == stop: break 
+            elif sub_choice['choice'] == exit_:
+                exit_flag = True 
+                continue
+            elif sub_choice["choice"] == extra_options[0]: continue
+            elif sub_choice["choice"] == extra_options[1]:
+                decks_dict = {}
+                for i, d in enumerate(new_decks):
+                    decks_dict[d.name] = i    
+                search = match(term, header(term, ["Play", "Search for a Deck"]), decks_dict, lambda x, y: f"{x:<40} | Played {str(decks[y].times_played):0>2} times.")
+                if type(search) == int: 
+                    sub_choice["index"] = search
+                    sub_choice['choice'] = decks[search]
+
+            name +=  " + " + new_decks[sub_choice['index']].name
+            words += new_decks[sub_choice['index']].words
+            selected_decks.append(new_decks[sub_choice['index']])
+
+    with_plurals = "Play with plural forms"
+    without_plurals = "Play without plural forms"
+    some_plurals = "Play with 50% plural forms"
+    ten_or_less = False
+    plurals = 0
+    while not exit_flag:
+        head = header(term, ["Play", f"Current Deck: {name} with {len(words)} cards.", "Options"]) + down(term)
+        options = [
+            some_plurals if plurals == 0 else with_plurals if plurals == 0.5 else without_plurals,  #cycle
+            "Play with all words" if ten_or_less else "Play only words played 10 times or less", #bool cycle
+            "Stop Playing Voices" if always_play else "Always Play Voices",
+            "-------", exit_, stop
+        ]
+
+        shortcuts = {"V": "Stop Playing Voices" if always_play else "Always Play Voices"}
+        choice = option(options, style=(head + down(term)), shortcuts=shortcuts)
+
+        if choice['choice'] == stop: break 
+        elif choice['choice'] == exit_: exit_flag = True # i don't want to recurse here because the call stack can't be even more sphagetti
+        elif choice['choice'] == without_plurals: plurals = 0
+        elif choice['choice'] == some_plurals: plurals = 0.5
+        elif choice['choice'] == with_plurals: plurals = 1
+        elif choice['choice'] == options[2]: always_play = not always_play
+        elif choice['choice'] == options[1]: ten_or_less = not ten_or_less
+        elif choice['choice'] == shortcuts["V"]: always_play = not always_play
+    if not exit_flag:
+        head = header(term, ["Play", "English or German?"])
+        choice = option(["English -> German", "German -> English"], style=(head + down(term)))
+
+        actual_words = list(filter(lambda x: x.times_played <= 10, words)) if ten_or_less else words
+        play_time = play(name, actual_words, True if choice['index'] == 0 else False, plurals, times, stack, voice, always_play)
+        for item in selected_decks: item.times_played += 1
+        return (decks, play_time)
+    else:
+        return (decks, None)
 
 def save(decks, tags: set[Tag] = None):
     try:
@@ -1114,6 +1320,20 @@ def save_time(time: Progress | None, today_time: int | None):
 
 
     return time
+
+def save_palette(palette: str | None = None):
+    if palette == None: 
+        file = open(f"{PALETTE}.txt", "r")
+        result = file.read()
+        file.close()
+        return result
+    else:
+        file = open(f"{PALETTE}.txt", "w")
+        result = file.write(palette)
+        file.close()
+        return palette
+
+
 
 init()
 menu()
