@@ -260,6 +260,10 @@ term.header_main = lambda x: term.black_on_plum(x)
 term.header_main_alt = lambda x: term.black_on_plum1(x)
 term.special_color = lambda x: term.white_on_black(x)
 
+from blessed import Terminal
+
+term = Terminal()
+
 palettes = {
     "Turquoise Plum (Default)": {
         "select_color": lambda x: term.black_on_paleturquoise1(x),
@@ -268,7 +272,6 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_plum1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Ocean Breeze": {
         "select_color": lambda x: term.black_on_skyblue1(x),
         "main_select_color": lambda x: term.black_on_skyblue(x),
@@ -276,7 +279,6 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_steelblue1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Forest Canopy": {
         "select_color": lambda x: term.black_on_palegreen1(x),
         "main_select_color": lambda x: term.black_on_palegreen(x),
@@ -284,7 +286,6 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_darkolivegreen1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Sunset Glow": {
         "select_color": lambda x: term.black_on_lightsalmon1(x),
         "main_select_color": lambda x: term.black_on_lightsalmon(x),
@@ -292,7 +293,6 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_indianred1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Royal Court": {
         "select_color": lambda x: term.black_on_mediumpurple1(x),
         "main_select_color": lambda x: term.black_on_mediumpurple(x),
@@ -300,7 +300,6 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_goldenrod1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Soft Rose": {
         "select_color": lambda x: term.black_on_hotpink1(x),
         "main_select_color": lambda x: term.black_on_hotpink(x),
@@ -308,7 +307,6 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_rosybrown1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Neon Nights": {
         "select_color": lambda x: term.black_on_springgreen1(x),
         "main_select_color": lambda x: term.black_on_springgreen(x),
@@ -316,7 +314,6 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_orchid1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Earth Tones": {
         "select_color": lambda x: term.black_on_navajowhite1(x),
         "main_select_color": lambda x: term.black_on_navajowhite(x),
@@ -324,20 +321,123 @@ palettes = {
         "header_main_alt": lambda x: term.black_on_chocolate1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-
-    "Cyber Punk": {
+    "Cyberpunk": {
         "select_color": lambda x: term.black_on_cyan1(x),
-        "main_select_color": lambda x: term.black_on_cyan3(x), # cyan doesn't have a standard 'cyan', cyan3 is darker
+        "main_select_color": lambda x: term.black_on_cyan3(x), 
         "header_main": lambda x: term.black_on_darkorange(x),
         "header_main_alt": lambda x: term.black_on_darkorange1(x),
         "special_color": lambda x: term.white_on_black(x)
     },
-    
     "Slate Monochrome": {
         "select_color": lambda x: term.black_on_slategray1(x),
         "main_select_color": lambda x: term.black_on_slategray(x),
         "header_main": lambda x: term.black_on_grey50(x), 
-        "header_main_alt": lambda x: term.black_on_grey70(x), # higher number = lighter grey
+        "header_main_alt": lambda x: term.black_on_grey70(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Lavender Dreams": {
+        "select_color": lambda x: term.black_on_thistle1(x),
+        "main_select_color": lambda x: term.black_on_thistle3(x),
+        "header_main": lambda x: term.black_on_mediumorchid(x),
+        "header_main_alt": lambda x: term.black_on_mediumorchid1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Citrus Burst": {
+        "select_color": lambda x: term.black_on_yellow1(x),
+        "main_select_color": lambda x: term.black_on_yellow3(x),
+        "header_main": lambda x: term.black_on_tomato(x),
+        "header_main_alt": lambda x: term.black_on_tomato1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Mint Cream": {
+        "select_color": lambda x: term.black_on_aquamarine1(x),
+        "main_select_color": lambda x: term.black_on_aquamarine3(x),
+        "header_main": lambda x: term.black_on_cadetblue(x),
+        "header_main_alt": lambda x: term.black_on_cadetblue1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Deep Sea": {
+        "select_color": lambda x: term.black_on_dodgerblue1(x),
+        "main_select_color": lambda x: term.black_on_dodgerblue3(x),
+        "header_main": lambda x: term.black_on_royalblue(x),
+        "header_main_alt": lambda x: term.black_on_royalblue1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Cherry Blossom": {
+        "select_color": lambda x: term.black_on_lightpink1(x),
+        "main_select_color": lambda x: term.black_on_lightpink3(x),
+        "header_main": lambda x: term.black_on_palevioletred(x),
+        "header_main_alt": lambda x: term.black_on_palevioletred1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Sesert Sand": {
+        "select_color": lambda x: term.black_on_wheat1(x),
+        "main_select_color": lambda x: term.black_on_wheat3(x),
+        "header_main": lambda x: term.black_on_burlywood(x),
+        "header_main_alt": lambda x: term.black_on_burlywood1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Autumn Leaves": {
+        "select_color": lambda x: term.black_on_gold1(x),
+        "main_select_color": lambda x: term.black_on_gold3(x),
+        "header_main": lambda x: term.black_on_firebrick(x),
+        "header_main_alt": lambda x: term.black_on_firebrick1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Arctic Ice": {
+        "select_color": lambda x: term.black_on_lightcyan1(x),
+        "main_select_color": lambda x: term.black_on_lightcyan3(x),
+        "header_main": lambda x: term.black_on_deepskyblue(x),
+        "header_main_alt": lambda x: term.black_on_deepskyblue1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Midnight Magic": {
+        "select_color": lambda x: term.black_on_slateblue1(x),
+        "main_select_color": lambda x: term.black_on_slateblue3(x),
+        "header_main": lambda x: term.black_on_darkorchid(x),
+        "header_main_alt": lambda x: term.black_on_darkorchid1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Toxic Waste": {
+        "select_color": lambda x: term.black_on_chartreuse1(x),
+        "main_select_color": lambda x: term.black_on_chartreuse3(x),
+        "header_main": lambda x: term.black_on_deeppink(x),
+        "header_main_alt": lambda x: term.black_on_deeppink1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Warm Hearth": {
+        "select_color": lambda x: term.black_on_peachpuff1(x),
+        "main_select_color": lambda x: term.black_on_peachpuff3(x),
+        "header_main": lambda x: term.black_on_sienna(x),
+        "header_main_alt": lambda x: term.black_on_sienna1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Velvet Lounge": {
+        "select_color": lambda x: term.black_on_red1(x),
+        "main_select_color": lambda x: term.black_on_red3(x),
+        "header_main": lambda x: term.black_on_maroon(x),
+        "header_main_alt": lambda x: term.black_on_maroon1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Electric Violet": {
+        "select_color": lambda x: term.black_on_magenta1(x),
+        "main_select_color": lambda x: term.black_on_magenta3(x),
+        "header_main": lambda x: term.black_on_darkturquoise(x),
+        "header_main_alt": lambda x: term.black_on_turquoise3(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Moss Stone": {
+        "select_color": lambda x: term.black_on_darkseagreen1(x),
+        "main_select_color": lambda x: term.black_on_darkseagreen3(x),
+        "header_main": lambda x: term.black_on_olivedrab(x),
+        "header_main_alt": lambda x: term.black_on_olivedrab1(x),
+        "special_color": lambda x: term.white_on_black(x)
+    },
+    "Sunflower Field": {
+        "select_color": lambda x: term.black_on_khaki1(x),
+        "main_select_color": lambda x: term.black_on_khaki3(x),
+        "header_main": lambda x: term.black_on_darkgoldenrod(x),
+        "header_main_alt": lambda x: term.black_on_darkgoldenrod1(x),
         "special_color": lambda x: term.white_on_black(x)
     }
 }
@@ -355,7 +455,7 @@ def init():
         _ = term.inkey()
 
 def menu():
-    menu_options = ['Edit Decks', 'Play', 'Stats', "Change Palette", "Exit"]
+    menu_options = ['Edit Decks', 'Play', 'Stats', "Change Palette", "Study Timer", "Exit"]
     tags = set()
     decks = save([], tags=tags)
     times = save_time(None, None)
@@ -392,7 +492,30 @@ def menu():
                 palette = search[0]
                 for attr_name, color_func in search[1].items():
                     setattr(term, attr_name, color_func)
-        elif choice == menu_options[4]: loop = False
+
+                print(term.clear)
+                print(menu_style(term))
+                print(term.header_main_alt(term.center(f"Set Palette to {search[0]}!")))
+                print(term.header_main(term.center(f"Set Palette to {search[0]}!")))
+                print(term.select_color(term.center(f"Set Palette to {search[0]}!")))
+                print(term.main_select_color(term.center(f"Set Palette to {search[0]}!")))
+                print(term.special_color(term.center(f"Set Palette to {search[0]}!")))
+                with term.cbreak(), term.hidden_cursor():
+                    key = term.inkey()
+        elif choice == menu_options[4]:
+            head = header(term, ["Study Timer", "Press ! to exit"])
+            #work
+            start = dt.datetime.now()
+            print(head)
+            print(term.home + term.move_down(term.height // 2 - 1) + 
+                    term.header_main_alt(term.center(f"{show_playtime(int((dt.datetime.now() - start).total_seconds()))}")))
+            with term.cbreak(), term.hidden_cursor():
+                while term.inkey(timeout=1.0) != "!":
+                    print(term.home + term.move_down(term.height // 2 - 1) + 
+                            term.header_main_alt(term.center(f"{show_playtime(int((dt.datetime.now() - start).total_seconds()))}")))
+                    
+            times = save_time(times, int((dt.datetime.now() - start).total_seconds()))
+        elif choice == menu_options[-1]: loop = False
         elif choice == shortcuts['n']:
             decks = save(decks)
             print(term.clear)
@@ -402,21 +525,31 @@ def menu():
                 key = term.inkey()
         elif choice == shortcuts['r']:
             random = rand.choice(list(palettes))
+            palette = random
             for attr_name, color_func in palettes[random].items():
                 setattr(term, attr_name, color_func)
 
             print(term.clear)
             print(menu_style(term))
             print(term.header_main_alt(term.center(f"Set Palette to {random}!")))
+            print(term.header_main(term.center(f"Set Palette to {random}!")))
+            print(term.select_color(term.center(f"Set Palette to {random}!")))
+            print(term.main_select_color(term.center(f"Set Palette to {random}!")))
+            print(term.special_color(term.center(f"Set Palette to {random}!")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif choice == shortcuts["R"]:
+            palette = "Turquoise Plum (Default)"
             for attr_name, color_func in palettes["Turquoise Plum (Default)"].items():
                 setattr(term, attr_name, color_func)   
 
             print(term.clear)
             print(menu_style(term))
             print(term.header_main_alt(term.center(f"Set Palette to Turquoise Plum (Default)!")))
+            print(term.header_main(term.center(f"Set Palette to Turquoise Plum (Default)!")))
+            print(term.select_color(term.center(f"Set Palette to Turquoise Plum (Default)!")))
+            print(term.main_select_color(term.center(f"Set Palette to Turquoise Plum (Default)!")))
+            print(term.special_color(term.center(f"Set Palette to Turquoise Plum (Default)!")))
             with term.cbreak(), term.hidden_cursor():
                 key = term.inkey()
         elif len(stack) > 0 and choice == shortcuts['p']:
@@ -615,7 +748,7 @@ def handle_deck(decks, deck_index, stack, tags, selected_tag, voice, jump = None
                     else:
                         print(term.clear)
                         print(head)
-                        print(term.center(special_color_on_black("Word has no tags!")))
+                        print(term.center(term.special_color("Word has no tags!")))
                         print(term.move_down(2))
                         with term.cbreak(), term.hidden_cursor():
                             _ = term.inkey()
@@ -644,7 +777,7 @@ def choose_deck(head: str, decks: list[Deck], extra_options: list[str], head_sma
     after = list(map(lambda x: f" | Played {str(x.times_played):0>2} times.", filtered))
     return {"filtered": filtered, "option": option(options, style=head, sp_style=head_small, after=after
                                                    , shortcuts=shortcuts, start_index=start_index, end=extra_options
-                                                   , range_=term.height // 2 - 3)}
+                                                   , range_=term.height // 2 - 2)}
 
 def match[T](term: Terminal, header: str, on: dict[str, T], show_T, show_size: int = None) -> T | None:
     search = ""
@@ -744,7 +877,7 @@ def handle_tags(term, tags: set[Tag], selected_tag: list[Tag]):
                 print(term.clear)
                 print(head2)
                 print(term.move_down(2))
-                print(special_color_on_black(term.center(f"Tag already exists!")))
+                print(term.special_color(term.center(f"Tag already exists!")))
                 with term.cbreak(), term.hidden_cursor():
                     _ = term.inkey()
             elif res == None: pass
@@ -797,7 +930,7 @@ def create_deck(term, decks, stack, tags, selected_tag, voice):
                 attempt = decks[choice["index"]].name
                 print(term.clear)
                 print(head)
-                print(special_color_on_black(term.center("Are you sure you want to delete {attempt} deck? Press [k] to actually delete.")))
+                print(term.special_color(term.center("Are you sure you want to delete {attempt} deck? Press [k] to actually delete.")))
                 with term.cbreak(), term.hidden_cursor():
                     key = term.inkey()
                 if key == "k":
